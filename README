@@ -1,1 +1,6 @@
-This is the project for 10701 in Fall2014.
+git add a new file or modified file
+git commit that file and write a commit message
+git push origin master
+
+git pull if want to download latest version
+
