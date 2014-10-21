@@ -44,10 +44,10 @@ b2grad = zeros(size(b2));
 
 n = size(data, 2);
 
-z2 = W1*data + repmat(b1', 1, n);
+z2 = W1*data + repmat(b1, 1, n);
 a2 = sigmoid(z2);
 
-z3 = W2*a2 + repmat(b2', 1, n);
+z3 = W2*a2 + repmat(b2, 1, n);
 a3 = sigmoid(z3); % also h_W,b(X)
 
 % cost
@@ -68,7 +68,7 @@ delta3 = -(data - a3) .* dsigmoid(z3);
 delta2 = (W2' * delta3) .* dsigmoid(z2);
 
 W2grad = delta3 * a2';
-W1grad = delta2 * a1'
+W1grad = delta2 * data'
 
 b2grad = delta3;
 b1grad = delta2;

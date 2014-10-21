@@ -37,13 +37,6 @@ Y = randi([1 (imagesize-patchsize+1)], 1, numpatches);
 Z = randi([1 size(IMAGES, 3)], 1, numpatches);
 patches = cell2mat(arrayfun(@(x,y,z) IMAGES(x:x+patchsize-1, y:y+patchsize-1, z)(:), X, Y, Z, 'UniformOutput', false));
 
-
-
-
-
-
-
-
 %% ---------------------------------------------------------------
 % For the autoencoder to work well we need to normalize the data
 % Specifically, since the output of the network is bounded between [0,1]
