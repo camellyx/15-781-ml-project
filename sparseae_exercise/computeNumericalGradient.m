@@ -18,12 +18,11 @@ numgrad = zeros(size(theta));
 %                
 % Hint: You will probably want to compute the elements of numgrad one at a time. 
 
+epsilon = 1e-4;
+e = epsilon .* diag(ones(length(theta),1));
+i = 1:length(theta);
 
-
-
-
-
-
+numgrad = arrayfun(@(col) (J(theta+e(:,col)) - J(theta-e(:,col)))./(2*epsilon), i)';
 
 %% ---------------------------------------------------------------
 end

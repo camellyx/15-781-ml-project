@@ -42,6 +42,10 @@ b2grad = zeros(size(b2));
 % the gradient descent update to W1 would be W1 := W1 - alpha * W1grad, and similarly for W2, b1, b2. 
 % 
 
+%--------------%
+% full version %
+%--------------%
+
 n = size(data, 2);
 
 z2 = W1*data + repmat(b1, 1, n);
@@ -52,8 +56,8 @@ a3 = sigmoid(z3); % also h_W,b(X)
 
 % cost
 
-squareError = (1/2*n) * sum(sum((a3 - data).^2));
-weightDecay = (1/lambda) * ( sum(sum(W1.^2)) + sum(sum(W2.^2)) );
+squareError = (1/(2*n)) * sum(sum((a3 - data).^2));
+weightDecay = (lambda/2) * ( sum(sum(W1.^2)) + sum(sum(W2.^2)) );
 
 pHat = (1/n) * sum(a2, 2);
 KL = sparsityParam .* log(sparsityParam./pHat) + (1-sparsityParam) .* log((1-sparsityParam) ./ (1 - pHat));
@@ -65,13 +69,51 @@ cost = squareError + weightDecay + sparsityPenalty;
 
 delta3 = -(data - a3) .* dsigmoid(z3);
 
-delta2 = (W2' * delta3) .* dsigmoid(z2);
+dKL = -sparsityParam ./ pHat + (1 - sparsityParam) ./ (1 - pHat);
+delta2 = (W2' * delta3 + repmat(beta .* dKL, 1, n)) .* dsigmoid(z2);
 
-W2grad = delta3 * a2';
-W1grad = delta2 * data'
+W2grad = delta3 * a2' ./ n + lambda .* W2;
+W1grad = delta2 * data' ./ n + lambda .* W1;
 
-b2grad = delta3;
-b1grad = delta2;
+b2grad = sum(delta3, 2) ./ n;
+b1grad = sum(delta2, 2) ./ n;
+
+
+%%----------------%
+%% simple version %
+%%----------------%
+%
+%n = size(data, 2);
+%
+%z2 = W1*data + repmat(b1, 1, n);
+%a2 = sigmoid(z2);
+%
+%z3 = W2*a2 + repmat(b2, 1, n);
+%a3 = sigmoid(z3); % also h_W,b(X)
+%
+%% cost
+%
+%squareError = (1/(2*n)) * sum(sum((a3 - data).^2));
+%weightDecay = (lambda/2) * ( sum(sum(W1.^2)) + sum(sum(W2.^2)) );
+%
+%pHat = (1/n) * sum(a2, 2);
+%KL = sparsityParam .* log(sparsityParam./pHat) + (1-sparsityParam) .* log((1-sparsityParam) ./ (1 - pHat));
+%sparsityPenalty = beta * sum(KL);
+%
+%cost = squareError;% + weightDecay + sparsityPenalty;
+%
+%% grad
+%
+%delta3 = -(data - a3) .* dsigmoid(z3);
+%
+%%dKL = -sparsityParam ./ pHat + (1 - sparsityParam) ./ (1 - pHat);
+%delta2 = (W2' * delta3) .* dsigmoid(z2);
+%
+%W2grad = delta3 * a2' ./ n;% + lambda .* W2;
+%W1grad = delta2 * data' ./ n;% + lambda .* W1;
+%
+%b2grad = sum(delta3, 2) ./ n;
+%b1grad = sum(delta2, 2) ./ n;
 
 %-------------------------------------------------------------------
 % After computing the cost and gradient, we will convert the gradients back
