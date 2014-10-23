@@ -38,7 +38,7 @@ xRot = U'*x;
 
 % -------------------- YOUR CODE HERE --------------------
 
-covar = sigma;
+covar = xRot*xRot' / size(xRot,2);
 
 % Visualise the covariance matrix. You should see a line across the
 % diagonal against a blue background.
@@ -54,10 +54,11 @@ imagesc(covar);
 num_row = size(x,1);
 eigval = diag(S);
 sum_eigval  = sum(eigval);
-while sum(eigval(1:i))<0.99*sum_eigval do
+i = 1;
+while sum(eigval(1:i))<0.99*sum_eigval
     k = i;
     i = i+1;
-end_while
+end
 
 %%================================================================
 %% Step 3: Implement PCA with dimension reduction
@@ -115,6 +116,7 @@ xPCAWhite = U'*x.*lambdas;
 %  becoming smaller.
 
 % -------------------- YOUR CODE HERE --------------------
+covar = xPCAWhite*xPCAWhite'/size(xPCAWhite,2);
 
 % Visualise the covariance matrix. You should see a red line across the
 % diagonal against a blue background.
