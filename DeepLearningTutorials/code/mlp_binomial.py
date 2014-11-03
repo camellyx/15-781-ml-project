@@ -266,7 +266,7 @@ def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
     classifier = MLP(
         rng=rng,
         input=x,
-        p = 0.8,
+        p = p,
         n_in=28 * 28,
         n_hidden=n_hidden,
         n_out=10
