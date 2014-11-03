@@ -14,6 +14,6 @@ fi
 mkdir $FOLDER
 
 for ml in *.py; do
-  #echo ${ml%.py}
+  echo running $ml
   python ./$ml > $FOLDER/${ml%.py}.out 2>&1
 done
