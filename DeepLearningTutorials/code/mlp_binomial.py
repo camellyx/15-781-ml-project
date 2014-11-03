@@ -421,4 +421,6 @@ def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
 if __name__ == '__main__':
     # test_mlp(0.5)
     # default, p=0.8
+    # test_mlp(p=0.9, n_hidden = 100)
+    # the number of hidden units is also a parameter, default is n_hidden=50
     test_mlp()
