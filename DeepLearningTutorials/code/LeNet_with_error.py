@@ -33,7 +33,7 @@ from theano.tensor.signal import downsample
 from theano.tensor.nnet import conv
 
 from logistic_sgd import LogisticRegression, load_data
-from mlp_binomial_error import HiddenLayer
+from mlp_binomial import HiddenLayer
 
 
 class LeNetConvPoolLayer(object):
@@ -198,6 +198,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     layer2 = HiddenLayer(
         rng,
         input=layer2_input,
+        p = 0.8,
         n_in=nkerns[1] * 4 * 4,
         n_out=500,
         activation=T.tanh
