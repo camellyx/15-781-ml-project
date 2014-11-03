@@ -325,6 +325,11 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     # start-snippet-3
     # specify how to update the parameters of the model as a list of
     # (variable, update expression) pairs.
+
+    ### Modified updates function ###
+
+
+
     updates = [(classifier.W, classifier.W - learning_rate * g_W),
                (classifier.b, classifier.b - learning_rate * g_b)]
 
