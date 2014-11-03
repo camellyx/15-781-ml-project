@@ -206,13 +206,16 @@ class MLP(object):
         # end-snippet-3
 
 
-def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
-             dataset='mnist.pkl.gz', batch_size=20, n_hidden=50):
+def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
+    n_epochs=1000, dataset='mnist.pkl.gz', batch_size=20, n_hidden=50):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
 
     This is demonstrated on MNIST.
+
+    :type p: float
+    :param p: binomial distribution parameter in dropconnect step
 
     :type learning_rate: float
     :param learning_rate: learning rate used (factor for the stochastic
@@ -416,4 +419,6 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
 
 
 if __name__ == '__main__':
+    # test_mlp(0.5)
+    # default, p=0.8
     test_mlp()
