@@ -11,6 +11,8 @@ if [ -d $FOLDER ]; then
   FOLDER=$FOLDER-$NUM
 fi
 
+mkdir $FOLDER
+
 for ml in *.py; do
   #echo ${ml%.py}
   python ./$ml > $FOLDER/${ml%.py}.out 2>&1
