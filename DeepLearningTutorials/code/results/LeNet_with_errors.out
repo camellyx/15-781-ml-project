@@ -1,0 +1,22 @@
+... loading data
+... building the model
+... training
+training @ iter =  0
+epoch 1, minibatch 100/100, validation error 10.500000 %
+     epoch 1, minibatch 100/100, test error of best model 10.930000 %
+training @ iter =  100
+epoch 2, minibatch 100/100, validation error 7.320000 %
+     epoch 2, minibatch 100/100, test error of best model 7.640000 %
+training @ iter =  200
+epoch 3, minibatch 100/100, validation error 5.350000 %
+     epoch 3, minibatch 100/100, test error of best model 5.870000 %
+training @ iter =  300
+epoch 4, minibatch 100/100, validation error 4.180000 %
+     epoch 4, minibatch 100/100, test error of best model 4.550000 %
+training @ iter =  400
+epoch 5, minibatch 100/100, validation error 3.610000 %
+     epoch 5, minibatch 100/100, test error of best model 3.930000 %
+training @ iter =  500
+epoch 6, minibatch 100/100, validation error 3.120000 %
+     epoch 6, minibatch 100/100, test error of best model 3.360000 %
+training @ iter =  600
