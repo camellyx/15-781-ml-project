@@ -2,10 +2,21 @@
 \label{sec:related}
 
 \subsection{Dropout}
-
-This is Dropout~\cite{srivastava2013improving}.
+In~\cite{hinton2012improving}, Hinton et al. proposed a mechanism,
+Dropout, to regularize fully connected neural networks.
+With probability $p$, the output of each neutron in a layer will be kept,
+otherwise the output will be set to $0$ with probability $(1-p)$.
+It has been showed that Dropout can effectively prevent overfitting of
+the model by decreasing the test error rate.
 
 \subsection{DropConnect}
+Inspired by DropConnect~\cite{hinton2012improving}, Wan et al. proposed
+a similar mechanism, DropConnect~\cite{wan2013dropconnect}.
+Instead of setting neutron outputs to be $0$, DropConnect randomly set
+weight vectors to be $0$.
 
-\subsection{MaxOut(?)}
-
+\subsection{Maxout}
+Another modification of Dropout is Maxout~\cite{goodfellow13maxout}.
+Different from traditional neural networks, Maxout uses the max function as
+the activation function on neurons in the hidden layer.
+This algorithm has also improved performance on certain data sets.
