@@ -248,8 +248,8 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # adding 0/1 binomial error to simulate dropconnect 
     srng = RandomStreams(seed = 508)
-    learning_rate_W = srng.binomial((28*28,10))
-    learning_rate_b = srng.binomial((10,))
+    learning_rate_W = srng.binomial((n_in, n_out))
+    learning_rate_b = srng.binomial((n_out,))
 
     # start-snippet-3
     # specify how to update the parameters of the model as a list of

@@ -248,8 +248,8 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # adding gaussian learning rate
     srng = RandomStreams(seed=234)
-    learning_rate_W = srng.normal((28*28, 10), learning_rate, learning_rate)
-    learning_rate_b = srng.normal((10,), learning_rate, learning_rate)
+    learning_rate_W = srng.normal((n_in, n_out), learning_rate, learning_rate)
+    learning_rate_b = srng.normal((n_out,), learning_rate, learning_rate)
 
     # start-snippet-3
     # specify how to update the parameters of the model as a list of

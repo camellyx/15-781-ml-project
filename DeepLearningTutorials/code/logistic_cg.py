@@ -166,9 +166,6 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
     n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
     n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
 
-    n_in = 28 * 28  # number of input units
-    n_out = 10  # number of output units
-
     ######################
     # BUILD ACTUAL MODEL #
     ######################
@@ -181,7 +178,9 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
                      # [int] labels
 
     # construct the logistic regression class
-    classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
+    n_in = train_set_x.get_value(borrow=True).shape[1]
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
     # the model in symbolic format
