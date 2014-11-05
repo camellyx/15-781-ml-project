@@ -257,16 +257,64 @@ def load_data(dataset):
         data_x = dict_xy[x_label]
         data_y = dict_xy[y_label]
         shared_x = theano.shared(numpy.asarray(data_x,
-                                               dtype=theano.config.floatX),
+                                               dtype=theano.config.floatX) / 256,
                                  borrow=borrow)
         shared_y = theano.shared(numpy.asarray(data_y,
                                                dtype=theano.config.floatX),
                                  borrow=borrow)
-        return shared_x, T.cast(shared_y, 'int32')
+        return shared_x, shared_y
     
     ##############
     # load cifar #
     ##############
+    if data_file == 'cifar-10-python.tar.gz':
+        if (not os.path.isfile(dataset)):
+            origin = (
+                'http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz'
+            )
+            print 'Downloading data from %s' % origin
+            urllib.urlretrieve(origin, dataset)
+            import tarfile
+            tar = tarfile.open(dataset)
+            tar.extractall(data_dir)
+            tar.close()
+    
+        print '... loading data'
+        
+        train_set_x1, train_set_y1 = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "data_batch_1"), "data", "labels")
+        train_set_x2, train_set_y2 = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "data_batch_2"), "data", "labels")
+        train_set_x3, train_set_y3 = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "data_batch_3"), "data", "labels")
+        train_set_x4, train_set_y4 = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "data_batch_4"), "data", "labels")
+        train_set_x5, train_set_y5 = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "data_batch_5"), "data", "labels")
+        train_set_x = theano.shared(numpy.concatenate((train_set_x1.get_value(),
+                                                       train_set_x2.get_value(),
+                                                       train_set_x3.get_value(),
+                                                       train_set_x4.get_value(),
+                                                       train_set_x5.get_value()),
+                                                      axis=0),
+                                    borrow=True)
+        train_set_y = theano.shared(numpy.concatenate((train_set_y1.get_value(),
+                                                       train_set_y2.get_value(),
+                                                       train_set_y3.get_value(),
+                                                       train_set_y4.get_value(),
+                                                       train_set_y5.get_value()),
+                                                      axis=0),
+                                    borrow=True)
+        train_set_y = T.cast(train_set_y, 'int32')
+        test_set_x, test_set_y = load_dict(os.path.join(data_dir,
+          "cifar-10-batches-py", "test_batch"), "data", "labels")
+        test_set_y = T.cast(test_set_y, 'int32')
+        valid_set_x = test_set_x
+        valid_set_y = test_set_y
+        rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
+                (test_set_x, test_set_y)]
+        return rval
+
     if data_file == 'cifar-100-python.tar.gz':
         if (not os.path.isfile(dataset)):
             origin = (
@@ -283,10 +331,12 @@ def load_data(dataset):
         
         test_set_x, test_set_y = load_dict(os.path.join(data_dir,
           "cifar-100-python", "test"), "data", "coarse_labels")
-        valid_set_x, valid_set_y = load_dict(os.path.join(data_dir,
+        test_set_y = T.cast(test_set_y, 'int32')
+        train_set_x, train_set_y = load_dict(os.path.join(data_dir,
           "cifar-100-python", "train"), "data", "coarse_labels")
-        train_set_x = valid_set_x
-        train_set_y = valid_set_y
+        train_set_y = T.cast(train_set_y, 'int32')
+        valid_set_x = test_set_x
+        valid_set_y = test_set_y
         rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
                 (test_set_x, test_set_y)]
         return rval
@@ -340,6 +390,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     # Each MNIST image has size 28*28
     n_in = train_set_x.get_value(borrow=True).shape[1]
     n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    print n_in, n_out
     classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
@@ -483,5 +534,5 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                           ' ran for %.1fs' % ((end_time - start_time)))
 
 if __name__ == '__main__':
-    #sgd_optimization_mnist(dataset='cifar-100-python.tar.gz')
-    sgd_optimization_mnist()
+    sgd_optimization_mnist(dataset='cifar-100-python.tar.gz')
+    #sgd_optimization_mnist()
