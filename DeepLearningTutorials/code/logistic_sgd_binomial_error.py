@@ -214,7 +214,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # construct the logistic regression class
     # Each MNIST image has size 28*28
-    classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
+    n_in = train_set_x.get_value(borrow=True).shape[1]
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
     # the model in symbolic format
