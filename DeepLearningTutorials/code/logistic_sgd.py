@@ -39,6 +39,7 @@ import gzip
 import os
 import sys
 import time
+import urllib
 
 import numpy
 
@@ -177,7 +178,7 @@ def load_data(dataset):
     # LOAD DATA #
     #############
 
-    # Download the MNIST dataset if it is not present
+    # Download the dataset if it is not present
     data_dir, data_file = os.path.split(dataset)
     if data_dir == "" and not os.path.isfile(dataset):
         # Check if dataset is in the data directory.
@@ -187,33 +188,13 @@ def load_data(dataset):
             "data",
             dataset
         )
-        if os.path.isfile(new_path) or data_file == 'mnist.pkl.gz':
-            dataset = new_path
-
-    if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
-        import urllib
-        origin = (
-            'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
-        )
-        print 'Downloading data from %s' % origin
-        urllib.urlretrieve(origin, dataset)
-
-    print '... loading data'
-
-    # Load the dataset
-    f = gzip.open(dataset, 'rb')
-    train_set, valid_set, test_set = cPickle.load(f)
-    f.close()
-    #train_set, valid_set, test_set format: tuple(input, target)
-    #input is an numpy.ndarray of 2 dimensions (a matrix)
-    #witch row's correspond to an example. target is a
-    #numpy.ndarray of 1 dimensions (vector)) that have the same length as
-    #the number of rows in the input. It should give the target
-    #target to the example with the same index in the input.
-
+        data_dir = "../data"
+        dataset = new_path
+    
+    # for mnist
     def shared_dataset(data_xy, borrow=True):
         """ Function that loads the dataset into shared variables
-
+    
         The reason we store our dataset in shared variables is to allow
         Theano to copy it into the GPU memory (when code is run on GPU).
         Since copying data into the GPU is slow, copying a minibatch everytime
@@ -235,15 +216,80 @@ def load_data(dataset):
         # ``shared_y`` we will have to cast it to int. This little hack
         # lets ous get around this issue
         return shared_x, T.cast(shared_y, 'int32')
-
-    test_set_x, test_set_y = shared_dataset(test_set)
-    valid_set_x, valid_set_y = shared_dataset(valid_set)
-    train_set_x, train_set_y = shared_dataset(train_set)
-
-    rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
-            (test_set_x, test_set_y)]
-    return rval
-
+    
+    ##############
+    # load mnist #
+    ##############
+    if data_file == 'mnist.pkl.gz':
+        if (not os.path.isfile(dataset)):
+            origin = (
+                'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
+            )
+            print 'Downloading data from %s' % origin
+            urllib.urlretrieve(origin, dataset)
+    
+        print '... loading data'
+        
+        # Load the dataset
+        f = gzip.open(dataset, 'rb')
+        train_set, valid_set, test_set = cPickle.load(f)
+        f.close()
+        #train_set, valid_set, test_set format: tuple(input, target)
+        #input is an numpy.ndarray of 2 dimensions (a matrix)
+        #witch row's correspond to an example. target is a
+        #numpy.ndarray of 1 dimensions (vector)) that have the same length as
+        #the number of rows in the input. It should give the target
+        #target to the example with the same index in the input.
+        
+        test_set_x, test_set_y = shared_dataset(test_set)
+        valid_set_x, valid_set_y = shared_dataset(valid_set)
+        train_set_x, train_set_y = shared_dataset(train_set)
+        
+        rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
+                (test_set_x, test_set_y)]
+        return rval
+     
+    # for cifar
+    def load_dict(filename, x_label, y_label, borrow=True):
+        f = open(filename)
+        dict_xy = cPickle.load(f)
+        f.close()
+        data_x = dict_xy[x_label]
+        data_y = dict_xy[y_label]
+        shared_x = theano.shared(numpy.asarray(data_x,
+                                               dtype=theano.config.floatX),
+                                 borrow=borrow)
+        shared_y = theano.shared(numpy.asarray(data_y,
+                                               dtype=theano.config.floatX),
+                                 borrow=borrow)
+        return shared_x, T.cast(shared_y, 'int32')
+    
+    ##############
+    # load cifar #
+    ##############
+    if data_file == 'cifar-100-python.tar.gz':
+        if (not os.path.isfile(dataset)):
+            origin = (
+                'http://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz'
+            )
+            print 'Downloading data from %s' % origin
+            urllib.urlretrieve(origin, dataset)
+        import tarfile
+        tar = tarfile.open(dataset)
+        tar.extractall(data_dir)
+        tar.close()
+    
+        print '... loading data'
+        
+        test_set_x, test_set_y = load_dict(os.path.join(data_dir,
+          "cifar-100-python", "test"), "data", "coarse_labels")
+        valid_set_x, valid_set_y = load_dict(os.path.join(data_dir,
+          "cifar-100-python", "train"), "data", "coarse_labels")
+        train_set_x = valid_set_x
+        train_set_y = valid_set_y
+        rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
+                (test_set_x, test_set_y)]
+        return rval
 
 def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                            dataset='mnist.pkl.gz',
@@ -292,7 +338,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # construct the logistic regression class
     # Each MNIST image has size 28*28
-    classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
+    n_in = train_set_x.get_value(borrow=True).shape[1]
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
     # the model in symbolic format
@@ -435,4 +483,5 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                           ' ran for %.1fs' % ((end_time - start_time)))
 
 if __name__ == '__main__':
+    #sgd_optimization_mnist(dataset='cifar-100-python.tar.gz')
     sgd_optimization_mnist()
