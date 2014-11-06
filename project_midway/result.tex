@@ -15,7 +15,7 @@ Theano.
 
 Using the python library Theano, we added noise to Logistic Regression
 model and Multi-layer Logistic Regression model.
-As a first step, we have only added noise from binomial and gaussian
+As a first step, we have only added noise from binomial and Gaussian
 distribution. Adding noise from other distributions will be studied in
 the second half of the project.
 
@@ -30,7 +30,7 @@ $W_{new} = W_{old} - learningRateGaussian * \bigtriangledown_{W}$
 
 where $learningRateBinomial$ is a matrix with entries from a binomial
 distribution $Bin(1,0.5)$ and $learningRateGaussin$ is a matrix with entries
-from a gaussian distribution $\mathcal{N}(0.26,0.13)$.
+from a Gaussian distribution $\mathcal{N}(0.26,0.13)$.
 
 Our experiments show that adding noise to learning rate can indeed
 improve accuracy of the model.
@@ -45,15 +45,14 @@ improve accuracy of the model.
 Figure~\ref{fig:logistic-sgd} shows the accuracy of three models.
 The blue line shows the test error rate of a regular Logistic Regression
 Model.  The green line shows the test error rate of a Logistic Regression
-Model with gaussian noise added to the learning rate.  The red line shows
+Model with Gaussian noise added to the learning rate.  The red line shows
 the test error rate of a Logistic Regression Model with binomial noise
 added to the learning rate.
 
 The models with noise outperform the regular model through the whole
 training process.  In general, the model with binomial noise converges
-faster than the model
-with gaussian noise, but eventually they have the same best test error
-rate.
+faster than the model with gaussian noise, but eventually they have the
+same best test error rate.
 
 The result of this experiment is very interesting since we did not
 expect that adding noise to learning rate would improve the accuracy
@@ -74,7 +73,7 @@ the probability of having $1$ in the mask.
 \label{fig:mlp-noise-psmall}
 \end{figure}
 
-As showed in~\ref{fig:mlp-noise-psmall}, accuracy of the model was not
+As is shown in Figure~\ref{fig:mlp-noise-psmall}, accuracy of the model was not
 improved by applying a random $0/1$ mask with probability $p=0.8$.
 We conjecture that this is because the number of hidden unites in the
 model. In our experiment, we only have $50$ hidden units. Hence $p=0.8$ is
@@ -121,5 +120,6 @@ As for next steps, we will keep adding noise from different
 distributions to different neural network models.
 Moreover, we want to understand why and how the noise will improve the
 accuracy of the model. We also want to study how to find the optimal
-noise for different models.
+noise for different models. Detailed plans are explained in
+Section~\ref{sec:intro}.
 
