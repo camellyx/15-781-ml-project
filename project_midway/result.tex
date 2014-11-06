@@ -16,7 +16,8 @@ Theano.
 Using the python library Theano, we added noise to Logistic Regression
 model and Multi-layer Logistic Regression model.
 As a first step, we have only added noise from binomial and gaussian
-distribution. Adding noise of other distributions will be studied later.
+distribution. Adding noise from other distributions will be studied in
+the second half of the project.
 
 In Logistic Regression Model, we added noise to the learning rate.
 To be more specific, the weight is updated as
@@ -90,5 +91,23 @@ shows that the accuracy of the model is improved.
 \label{fig:mlp-noise-pbig}
 \end{figure}
 
-Figure~\ref{fig:mlp-noise-pbig}
+Figure~\ref{fig:mlp-noise-pbig} shows the test error rate of the
+applying a random mask with $p=0.99$ to the Multi-layer Logistic
+Regression Model.
+The blue line shows the test error rate of a regular Multi-layer Logistic
+Regression model without mask.
+The red line show the test error rate of a Multi-layer Logistic Regression
+Model with a random $0/1$ mask applied between input layer and hidden
+layer, which simulates Dropconnect.
+The green line shows the test error rate of a Multi-layer Logistic
+Regression model with a random $0/1$ mask applied between hidden layer and
+output layer.
+
+The test error rate of these three models are competitive with each other.
+However, the test error rate of models with noise decrease faster than
+then regular one. This result is very interesting because it demonstrates
+that adding noise to the model can indeed improve its accuracy.
+Based on the result of this experiment, we are more interested in how to
+find the optimal $p$ for a model with $n_hidden$ hidden units. We want to
+know whether the optimal $p$ value depends on $n_hidden$ or not.
 
