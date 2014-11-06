@@ -14,7 +14,7 @@ switched to python because python has a nice deep learning library,
 Theano.
 
 Using the python library Theano, we added noise to Logistic Regression
-model and Multi-layer Logistic Regression(MLP) model.
+model and Multi-layer Logistic Regression model.
 As a first step, we have only added noise from binomial and gaussian
 distribution. Adding noise of other distributions will be studied later.
 
@@ -33,7 +33,7 @@ from a gaussian distribution $\mathcal{N}(0.26,0.13)$.
 Our experiments show that adding noise to learning rate can indeed
 improve accuracy of the model.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
 \includegraphics[width=215pt]{figs/logistic_sgd_all.png}
 \caption{Logistic Regression with Noise}
@@ -66,9 +66,29 @@ weights in the model to simulate Dropconnect and Dropout
 In our experiment, we tried two different values of $p$, where $p$ is
 the probability of having $1$ in the mask.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\caption{MLP with Noise}
 \includegraphics[width=215pt]{figs/mlp_psmall.png}
+\caption{Multi-layer Logistic Regression with Noise, $p=0.8$}
+\label{fig:mlp-noise-psmall}
 \end{figure}
+
+As showed in~\ref{fig:mlp-noise-psmall}, accuracy of the model was not
+improved by applying a random $0/1$ mask with probability $p=0.8$.
+We conjecture that this is because the number of hidden unites in the
+model. In our experiment, we only have $50$ hidden units. Hence $p=0.8$ is
+too small; we need to keep more weights in the model.
+
+Based on the previous observation, we then applied a random $0/1$ mask
+with $p=0.99$ to the Multi-layer Logistic Regression Model. The result
+shows that the accuracy of the model is improved.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=215pt]{figs/mlp_pbig.png}
+\caption{Multi-layer Logistic Regression with Noise, $p=0.99$}
+\label{fig:mlp-noise-pbig}
+\end{figure}
+
+Figure~\ref{fig:mlp-noise-pbig}
 
