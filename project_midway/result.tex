@@ -19,6 +19,7 @@ As a first step, we have only added noise from binomial and gaussian
 distribution. Adding noise from other distributions will be studied in
 the second half of the project.
 
+\subsection{Logistic Regression}
 In Logistic Regression Model, we added noise to the learning rate.
 To be more specific, the weight is updated as
 
@@ -61,9 +62,10 @@ expect that adding noise to learning rate would improve the accuracy
 of the model. We will study the theoretical reason behind this improvement
 of accuracy later in the project.
 
+\subsection{Multi-layer Logistic Regression}
 In Multi-layer Logistic Regression Model, we applied a random $0/1$ mask to
-weights in the model to simulate Dropconnect and Dropout
-(See Related Works for more details about Dropconnect and Dropout).
+weights in the model to simulate DropConnect and Dropout
+(See Related Works for more details about DropConnect and Dropout).
 In our experiment, we tried two different values of $p$, where $p$ is
 the probability of having $1$ in the mask.
 
@@ -98,7 +100,7 @@ The blue line shows the test error rate of a regular Multi-layer Logistic
 Regression model without mask.
 The red line show the test error rate of a Multi-layer Logistic Regression
 Model with a random $0/1$ mask applied between input layer and hidden
-layer, which simulates Dropconnect.
+layer, which simulates DropConnect.
 The green line shows the test error rate of a Multi-layer Logistic
 Regression model with a random $0/1$ mask applied between hidden layer and
 output layer, which simulates Dropout.
