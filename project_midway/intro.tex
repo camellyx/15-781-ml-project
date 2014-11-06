@@ -30,24 +30,69 @@ In this project, however, we intend to validate and generalize this observation
 to other types of noise, which may be introduced by other factors such as lossy
 compression, lossy computation, or transient floating point
 % TODO: add citation for these
-computation/memory/storage errors. We expect our results to pave the way for
-future exploration of hardware approximate computation/storage techniques to
-accelerate and improve the accuracy for large-scale deep learning algorithms.
+computation/memory/storage errors. We expect our results to improve the
+understanding of the effect of noise in deep neural networks, which we believe
+will pave the way for future exploration of hardware approximate
+computation/storage techniques to accelerate and improve the accuracy for
+large-scale deep learning algorithms.
 
-More specifically, we intend to answer at least the following new research questions:
+More specifically, our goals include but are not limited by:
 \begin{itemize}
-  \item What are the points of interest in different neural network models in
-    which we can introduce noise? How do we inject errors to emulate these
-    noise? How does each model react to these errors? Does the noise improve or
-    reduce accuracy of the model when they are introduced at different places?
-  \item What are the 
+  \item Exploration of different types of neural network models, and different
+    parts of each model in which we can introduce noise. The neural network
+    models we study are single-layer neural network (logistic regression),
+    multi-layer neural network (mlp), convolutional neural network (LeNet).
+    Points of interest to which we introduce noise are weights stored in each
+    neuron ($W$), links connecting each two neurons, computation of each
+    neuron's output, computation associated with each neuron update.
+  \item Exploration of different noise models. We model different types of noise
+    as probabilistic distributions such as Bernoulli, Gaussian, and
+    Uniform-random distribution.
+  \item Experimental study of improvements in accuracy and convergence rate when
+    we train each model with different noise.
 \end{itemize}
 
-{\bf Metrics:} %%% Not sure about this part %%%
-We are interested in the improvement of error rate, convergence rate
-and training speed.
-We consider a 0.99\% decrease in test error rate to be significant.
+{\bf Metrics of success and plans of attack:}
+In this project, we plan to explore three neural network models---single-layer
+neural network (logistic regression), multi-layer neural network (mlp),
+convolutional neural network (LeNet); four points of interest to introduce
+noise---weights stored in each neuron ($W$), links connecting each two neurons,
+computation of each neuron's output, computation associated with each neuron
+update; three noise models---Bernoulli noise, Gaussian noise, and Uniform-random
+noise. We plan to experimentally measure the accuracy and convergence rate of
+each model with noise on at least three data sets---a hand-written digit data
+set (MNIST), and two tiny images data set (CIFAR-10 and CIFAR-100).
 
+We compare with recent works in this area~\cite{srivastava2013improving,
+hinton2012improving, wan2013dropconnect, goodfellow13maxout} and consider any
+improvement in accuracy or convergence rate in the final results to be a
+success.
 
+Until this milestone, we believe we are on schedule towards our goal of this
+project. So far, we have accomplished the steps of (1) implementation of a
+sparse auto-encoder in {\tt MatLab} which helps us understand neural networks
+better, (2) experimental study of two noise models (Bernoulli and Gaussian) with
+two neural network models (logistic regression and mlp), and (3) addition of
+support for two data sets (CIFAR-10 and CIFAR-100) in the DeepLearningTutorials
+code base.
+
+We have switched to DeepLearningTuturials with {\tt Python} from our own
+implementation in {\tt Matlab} because we find out that we should take advantage
+of existing implementation to explore more neural network models. However, the
+experience of implementing a sparse auto-encoder in {\tt Matlab} helps us to
+better understand the model and deserves some credit (note that we are group of
+two). The DeepLearningTutorials code base have all the models mentioned above
+with only the support of MNIST data set. The CIFAR data set has a different
+format than the MNIST data set, which we have worked on to import into the
+existing code base.
+
+We believe the goals we set in the proposal are interesting. By the end of the
+semester, we will stick with the plans above and would like to explore more if
+we have time (such as studying more neural network models, adding support for
+more data sets, etc). We believe our goals are interesting and achievable in the
+remaining time. We believe our project is interesting and would like to work on
+it afterwards to study the performance benefit of introducing the noise due to
+hardware/software relaxation of computation/storage accuracy as we have
+mentioned in our problem definition.
 
 
