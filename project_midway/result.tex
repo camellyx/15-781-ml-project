@@ -47,20 +47,17 @@ The blue line shows the test error rate of a regular Logistic Regression
 Model.  The green line shows the test error rate of a Logistic Regression
 Model with Gaussian noise added to the learning rate.  The red line shows
 the test error rate of a Logistic Regression Model with binomial noise
-added the learning rate.  The models with noise outperform the regular
-model through the whole training process.  We also observe that the red
-line is less smooth than the green line.  This behavior is expected since
-if the learning rate is from a binomial distribution, it is possible that
-during the gradient descent we will step back several times.
+added to the learning rate.
 
-In general, the model with binomial noise converges faster than the model
-with Gaussian noise, but eventually they have the same best test error
-rate.
+The models with noise outperform the regular model through the whole
+training process.  In general, the model with binomial noise converges
+faster than the model with gaussian noise, but eventually they have the
+same best test error rate.
 
 The result of this experiment is very interesting since we did not
 expect that adding noise to learning rate would improve the accuracy
 of the model. We will study the theoretical reason behind this improvement
-of accuracy later in the project.
+in the second half of the project.
 
 \subsection{Multi-layer Logistic Regression}
 In Multi-layer Logistic Regression Model, we applied a random $0/1$ mask to
@@ -108,7 +105,9 @@ output layer, which simulates Dropout.
 The test error rate of these three models are competitive with each other.
 However, the test error rate of models with noise decrease faster than
 then regular one. This result is very interesting because it demonstrates
-that adding noise to the model can indeed improve its accuracy.
+that adding noise to the model can not only improve accuracy but also
+increase convergence rate.
+
 Based on the result of this experiment, we are more interested in how to
 find the optimal $p$ for a model with $n_{hidden}$ hidden units. We want to
 know whether the optimal $p$ value depends on $n_{hidden}$ or not.
