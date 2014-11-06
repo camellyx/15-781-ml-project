@@ -15,7 +15,7 @@ Theano.
 
 Using the python library Theano, we added noise to Logistic Regression
 model and Multi-layer Logistic Regression model.
-As a first step, we have only added noise from binomial and Gaussian
+As a first step, we have only added noise from Binomial and Gaussian
 distribution. Adding noise from other distributions will be studied in
 the second half of the project.
 
@@ -28,7 +28,7 @@ $W_{new} = W_{old} - learningRateBinomial * \bigtriangledown_{W}$
 $W_{new} = W_{old} - learningRateGaussian * \bigtriangledown_{W}$
 \end{center}
 
-where $learningRateBinomial$ is a matrix with entries from a binomial
+where $learningRateBinomial$ is a matrix with entries from a Binomial
 distribution $Bin(1,0.5)$ and $learningRateGaussin$ is a matrix with entries
 from a Gaussian distribution $\mathcal{N}(0.26,0.13)$.
 
@@ -46,12 +46,12 @@ Figure~\ref{fig:logistic-sgd} shows the accuracy of three models.
 The blue line shows the test error rate of a regular Logistic Regression
 Model.  The green line shows the test error rate of a Logistic Regression
 Model with Gaussian noise added to the learning rate.  The red line shows
-the test error rate of a Logistic Regression Model with binomial noise
+the test error rate of a Logistic Regression Model with Binomial noise
 added to the learning rate.
 
 The models with noise outperform the regular model through the whole
-training process.  In general, the model with binomial noise converges
-faster than the model with gaussian noise, but eventually they have the
+training process.  In general, the model with Binomial noise converges
+faster than the model with Gaussian noise, but eventually they have the
 same best test error rate.
 
 The result of this experiment is very interesting since we did not
