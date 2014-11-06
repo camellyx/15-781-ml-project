@@ -192,8 +192,8 @@ class MLP(object):
         # end-snippet-3
 
 
-def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
-             dataset='mnist.pkl.gz', batch_size=20, n_hidden=50):
+def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=50,
+             dataset='mnist.pkl.gz', batch_size=20, n_hidden=500):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -355,7 +355,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                                      in xrange(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
 
-                print(
+                '''print(
                     'epoch %i, minibatch %i/%i, validation error %f %%' %
                     (
                         epoch,
@@ -363,7 +363,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                         n_train_batches,
                         this_validation_loss * 100.
                     )
-                )
+                )'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -382,22 +382,23 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                                    in xrange(n_test_batches)]
                     test_score = numpy.mean(test_losses)
 
-                    print(('     epoch %i, minibatch %i/%i, test error of '
+                    '''print(('     epoch %i, minibatch %i/%i, test error of '
                            'best model %f %%') %
                           (epoch, minibatch_index + 1, n_train_batches,
-                           test_score * 100.))
+                           test_score * 100.))'''
+                    print test_score * 100.
 
             if patience <= iter:
                 done_looping = True
                 break
 
     end_time = time.clock()
-    print(('Optimization complete. Best validation score of %f %% '
+    '''print(('Optimization complete. Best validation score of %f %% '
            'obtained at iteration %i, with test performance %f %%') %
           (best_validation_loss * 100., best_iter + 1, test_score * 100.))
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
+                          ' ran for %.2fm' % ((end_time - start_time) / 60.))'''
 
 
 if __name__ == '__main__':

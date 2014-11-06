@@ -102,17 +102,17 @@ class HiddenLayer(object):
 
         # Apply a random mask to hiddenLayer to simulate dropconnect
         srng = RandomStreams(seed=930)
-        output_mask = srng.binomial((n_in,n_out),1,p)
+        #output_mask = srng.binomial((n_in,n_out),1,p)
 
-        lin_output = T.dot(input, output_mask*self.W) + self.b
+        lin_output = T.dot(input, self.W) + self.b
         self.output = (
             lin_output if activation is None
             else activation(lin_output)
         )
 
         # If want to simulate dropout
-        # output_mask = srng.binomal((n_out,),1,p)
-        # self.output = output_mask*self.output
+        output_mask = srng.binomial((n_out,),1,p)
+        self.output = output_mask*self.output
 
         # parameters of the model
         self.params = [self.W, self.b]
@@ -206,8 +206,8 @@ class MLP(object):
         # end-snippet-3
 
 
-def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
-    n_epochs=1000, dataset='mnist.pkl.gz', batch_size=20, n_hidden=50):
+def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
+    n_epochs=100, dataset='mnist.pkl.gz', batch_size=20, n_hidden=50):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -373,7 +373,7 @@ def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
                                      in xrange(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
 
-                print(
+                '''print(
                     'epoch %i, minibatch %i/%i, validation error %f %%' %
                     (
                         epoch,
@@ -381,7 +381,7 @@ def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
                         n_train_batches,
                         this_validation_loss * 100.
                     )
-                )
+                )'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -400,22 +400,23 @@ def test_mlp(p=0.8, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
                                    in xrange(n_test_batches)]
                     test_score = numpy.mean(test_losses)
 
-                    print(('     epoch %i, minibatch %i/%i, test error of '
+                    '''print(('     epoch %i, minibatch %i/%i, test error of '
                            'best model %f %%') %
                           (epoch, minibatch_index + 1, n_train_batches,
-                           test_score * 100.))
+                           test_score * 100.))'''
+                    print test_score * 100.
 
             if patience <= iter:
                 done_looping = True
                 break
 
     end_time = time.clock()
-    print(('Optimization complete. Best validation score of %f %% '
+    '''print(('Optimization complete. Best validation score of %f %% '
            'obtained at iteration %i, with test performance %f %%') %
           (best_validation_loss * 100., best_iter + 1, test_score * 100.))
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
+                          ' ran for %.2fm' % ((end_time - start_time) / 60.))'''
 
 
 if __name__ == '__main__':

@@ -160,7 +160,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
     valid_set_x, valid_set_y = datasets[1]
     test_set_x, test_set_y = datasets[2]
 
-    batch_size = 600    # size of the minibatch
+    batch_size = 100    # size of the minibatch
 
     n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
     n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
@@ -298,4 +298,4 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
 
 
 if __name__ == '__main__':
-    cg_optimization_mnist()
+    cg_optimization_mnist(mnist_pkl_gz='cifar-100-python.tar.gz')

@@ -167,7 +167,7 @@ class LogisticRegression(object):
         else:
             raise NotImplementedError()
 
-def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
+def sgd_optimization_mnist(learning_rate=0.13, n_epochs=500,
                            dataset='mnist.pkl.gz',
                            batch_size=600):
     """
@@ -307,7 +307,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                                      for i in xrange(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
 
-                print(
+                '''print(
                     'epoch %i, minibatch %i/%i, validation error %f %%' %
                     (
                         epoch,
@@ -315,7 +315,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                         n_train_batches,
                         this_validation_loss * 100.
                     )
-                )
+                )'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -332,16 +332,16 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                     test_score = numpy.mean(test_losses)
 
                     print(
-                        (
-                            '     epoch %i, minibatch %i/%i, test error of'
-                            ' best model %f %%'
-                        ) %
-                        (
-                            epoch,
-                            minibatch_index + 1,
-                            n_train_batches,
+                        #(
+                        #    '     epoch %i, minibatch %i/%i, test error of'
+                        #    ' best model %f %%'
+                        #) %
+                        #(
+                            #epoch,
+                            #minibatch_index + 1,
+                            #n_train_batches,
                             test_score * 100.
-                        )
+                        #)
                     )
 
             if patience <= iter:
@@ -349,7 +349,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 break
 
     end_time = time.clock()
-    print(
+    ''' print(
         (
             'Optimization complete with best validation score of %f %%,'
             'with test performance %f %%'
@@ -360,7 +360,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
         epoch, 1. * epoch / (end_time - start_time))
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time)))
+                          ' ran for %.1fs' % ((end_time - start_time)))'''
 
 if __name__ == '__main__':
     sgd_optimization_mnist()
