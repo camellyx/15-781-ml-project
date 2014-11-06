@@ -27,17 +27,21 @@ model to classify the test data better.
 
 {\bf Goal:}
 In this project, however, we intend to validate and generalize this observation
-to other types of noise, introduced by lossy compression, lossy computation, or
-transient floating point computation/memory/storage errors. We expect our
-results to pave the way for future exploration of hardware approximate
-computation/storage techniques to accelerate and improve the accuracy for
-large-scale deep learning algorithms.
+to other types of noise, which may be introduced by other factors such as lossy
+compression, lossy computation, or transient floating point
+% TODO: add citation for these
+computation/memory/storage errors. We expect our results to pave the way for
+future exploration of hardware approximate computation/storage techniques to
+accelerate and improve the accuracy for large-scale deep learning algorithms.
 
-We intend to comprehensively study how adding noise to the training
-process will affect the performance and accuracy of neural network models.
-We expect our results to pave the way for future exploration of
-hardware approximate computation or storage techniques to accelerate
-and improve the training process of large-scale deep learning models.
+More specifically, we intend to answer at least the following new research questions:
+\begin{itemize}
+  \item What are the points of interest in different neural network models in
+    which we can introduce noise? How do we inject errors to emulate these
+    noise? How does each model react to these errors? Does the noise improve or
+    reduce accuracy of the model when they are introduced at different places?
+  \item What are the 
+\end{itemize}
 
 {\bf Metrics:} %%% Not sure about this part %%%
 We are interested in the improvement of error rate, convergence rate
