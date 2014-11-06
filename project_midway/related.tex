@@ -1,22 +1,25 @@
 \section{Related Works}
 \label{sec:related}
 
-\subsection{Dropout}
-In~\cite{hinton2012improving}, Hinton et al. proposed a mechanism,
-Dropout, to regularize fully connected neural networks.
-With probability $p$, the output of each neutron in a layer will be kept,
-otherwise the output will be set to $0$ with probability $(1-p)$.
-It has been showed that Dropout can effectively prevent overfitting of
-the model by decreasing the test error rate.
+We summarize three recent works that explain and explore three mechanisms to
+introduce noise in multi-layer neural networks (mlp). We believe our work is
+much more comprehensive than these works and we will compare with them in our
+final report.
 
-\subsection{DropConnect}
-Inspired by DropConnect~\cite{hinton2012improving}, Wan et al. proposed
-a similar mechanism, DropConnect~\cite{wan2013dropconnect}.
-Instead of setting neutron outputs to be $0$, DropConnect randomly set
-weight vectors to be $0$.
+{\bf Dropout:}
+Dropout proposes to regularize fully connected neural networks by
+probabilistically dropping an output (set to zero) of a hidden layer
+neuron~\cite{hinton2012improving} (i.e., with a low probability $(1-p)$, one of
+the output of a hidden layer neutron is set to $0$ in the forward propagation
+process).  This can effectively decrease test error rates by preventing
+over-fitting of the model.
 
-\subsection{Maxout}
-Another modification of Dropout is Maxout~\cite{goodfellow13maxout}.
-Different from traditional neural networks, Maxout uses the max function as
-the activation function on neurons in the hidden layer.
-This algorithm has also improved performance on certain data sets.
+{\bf DropConnect:}
+Inspired by Dropout~\cite{hinton2012improving}, DropConnect proposes to
+probabilistically drop a weight of a hidden layer neuron (as opposed to an
+output of a hidden layer neuron in DropConnect)~\cite{wan2013dropconnect}.
+
+{\bf Maxout:}
+Maxout extends Dropout and DropConnect by probabilistically set an output or a
+weight of a hidden layer neuron to maximum value~\cite{goodfellow13maxout}.
+
