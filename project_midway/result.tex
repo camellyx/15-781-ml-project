@@ -63,7 +63,7 @@ of accuracy later in the project.
 
 In Multi-layer Logistic Regression Model, we applied a random $0/1$ mask to
 weights in the model to simulate Dropconnect and Dropout
-(See Related works for more details about Dropconnect and Dropout).
+(See Related Works for more details about Dropconnect and Dropout).
 In our experiment, we tried two different values of $p$, where $p$ is
 the probability of having $1$ in the mask.
 
@@ -101,7 +101,7 @@ Model with a random $0/1$ mask applied between input layer and hidden
 layer, which simulates Dropconnect.
 The green line shows the test error rate of a Multi-layer Logistic
 Regression model with a random $0/1$ mask applied between hidden layer and
-output layer.
+output layer, which simulates Dropout.
 
 The test error rate of these three models are competitive with each other.
 However, the test error rate of models with noise decrease faster than
@@ -110,4 +110,14 @@ that adding noise to the model can indeed improve its accuracy.
 Based on the result of this experiment, we are more interested in how to
 find the optimal $p$ for a model with $n_hidden$ hidden units. We want to
 know whether the optimal $p$ value depends on $n_hidden$ or not.
+
+We are currently working on adding noise to Convolutional Multi-layer
+Logistic Regression Models. Our experiment will include adding noise to
+both the feature mapping part and training part.
+
+As for next steps, we will keep adding noise from different
+distributions to different neural network models.
+Moreover, we want to understand why and how the noise will improve the
+accuracy of the model. We also want to study how to find the optimal
+noise for different models.
 
