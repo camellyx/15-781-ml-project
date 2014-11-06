@@ -7,7 +7,7 @@ We are mainly interested in pattern recognition related datasets.
 All the datasets are available online.
 In order to conduct experiments, we need to load the datasets into our
 model and fine-tune parameters of the model.
-We have been primarily working on MNIST and CIFAR-10. We plan to
+We have been primarily working on MNIST and CIFAR. We plan to
 conduct experiment on three to four datasets in total if time permitted.
 
 \subsection{MNIST}
@@ -19,21 +19,16 @@ We used this data set in our first step experiments. (See Experimental
 Results for more details.)
 
 \subsection{CIFAR}
-CIFAR-10 is a data set of 60000 32x32 colour images in 10 classes, with
-6000 images per class. There are 50000 training images and 10000 test
-images. The dataset is divided into five training batches and one test
-batch, each with 10000 images. The test batch contains exactly 1000
-randomly-selected images from each class. The training batches contain the
-remaining images in random order, but some training batches may contain
-more images from one class than another. Between them, the training
-batches contain exactly 5000 images from each class.
+CIFAR-10 is a data set of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test
+images.
+CIFAR-100 is just like CIFAR-10, expect that it has 100 classes containing
+600 images each. There are 500 training images and 100 testing images per
+class.
 
 We have succesfully loaded this dataset, and we are working on
 fine-tuning parameters of the model to better fit this dataset.
 
 \subsection{Other data sets}
-Besides the above two datasets, we will conduct experiements on the
-following datasets as well:
- Street View House Numbers (SVHN)
- The NORB Dataset
+Besides the above datasets, we plan to conduct experiements on
+datasets such as Street View House Numbers (SVHN) and NORB as well.
 
