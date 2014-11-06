@@ -1,14 +1,36 @@
 \section{Methodology}
 \label{sec:meth}
 
-Data set (5 points): Is the data set completely ready (in-hand, loaded onto a
-machine, analyzed for outliers or other problems)? Have some main features of
-the data set been characterized (either visually or statistically)?
+%Data set (5 points): Is the data set completely ready (in-hand, loaded onto a machine, analyzed for outliers or other problems)? Have some main features of the data set been characterized (either visually or statistically)?
+
 
 \subsection{MNIST}
+MNIST is a data set of handwritten digits. It contains a training set of
+60,000 examples and a test set of 10,000 examples. The digits have been
+size-normalized and centered in a fixed-size image.
+
+We used this data set in our first step experiments. (See Experiments for
+more details.)
 
 \subsection{CIFAR-10}
+CIFAR-10 is a data set of 60000 32x32 colour images in 10 classes, with
+6000 images per class. There are 50000 training images and 10000 test
+images. The dataset is divided into five training batches and one test
+batch, each with 10000 images. The test batch contains exactly 1000
+randomly-selected images from each class. The training batches contain the
+remaining images in random order, but some training batches may contain
+more images from one class than another. Between them, the training
+batches contain exactly 5000 images from each class.
+
+We have succesfully loaded this dataset, and we are working on
+fine-tuning parameters of the model to better fit this dataset.
 
 \subsection{Other data sets}
-
+Besides the above two datasets, we will conduct experiements on the
+following datasets as well:
+\begin{itemize}
+\item CIFAR-100 \\
+\item Street View House Numbers(SVHN)\\
+\item
+\end{itemize}
 
