@@ -1,16 +1,38 @@
 \section{Introduction}
 \label{sec:intro}
 
-%%%% Question and Goals (10 points): State the updated version of the research question, based on results so far. Is it well-formed and interesting? Are there well-defined metrics for success? Is the minimum goal achievable in the remaining time? Are the stretch goals interesting?
+% Question and Goals (10 points): State the updated version of the research
+% question, based on results so far. Is it well-formed and interesting? Are
+% there well-defined metrics for success? Is the minimum goal achievable in the
+% remaining time? Are the stretch goals interesting?
 
 {\bf Problem:}
 Large-scale deep neutral network models have become increasingly popular
-to solve hard classification problems and have demonstrated sigificant
+to solve hard classification problems and have demonstrated significant
 improvements in accuracy. Due to the scale of the neutral network and the
 scale of the input data set, performance, in addition to accuracy, has
 become a significant factor in such deep learning implementations.
 
+Recent works~\cite{dean2012large, chilimbi14adam} on large-scale machine
+learning systems proposes to significantly improve the performance by relaxing
+the consistency when updating the weights of each individual unit (e.g., one
+weight update can get overwritten by another). One interesting observation in
+this paper, alongside the above one, is that this relaxation surprisingly
+improves the accuracy of the model.
+
+The hypothesis of this observation (in~\cite{chilimbi14adam}) is that relaxing
+consistency introduces some stochastic noise into the training data. This
+implicitly mitigates over-fitting of the model and generalizes the resulting
+model to classify the test data better.
+
 {\bf Goal:}
+In this project, however, we intend to validate and generalize this observation
+to other types of noise, introduced by lossy compression, lossy computation, or
+transient floating point computation/memory/storage errors. We expect our
+results to pave the way for future exploration of hardware approximate
+computation/storage techniques to accelerate and improve the accuracy for
+large-scale deep learning algorithms.
+
 We intend to comprehensively study how adding noise to the training
 process will affect the performance and accuracy of neural network models.
 We expect our results to pave the way for future exploration of
