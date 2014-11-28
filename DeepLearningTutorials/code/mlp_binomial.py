@@ -100,9 +100,12 @@ class HiddenLayer(object):
         self.W = W
         self.b = b
 
-        # Apply a random mask to hiddenLayer to simulate dropconnect
-        srng = RandomStreams(seed=930)
-        #output_mask = srng.binomial((n_in,n_out),1,p)
+        srng = RandomStreams(seed=930508)
+
+        #### dropconnect ####
+        # output_mask = srng.binomial((n_in,n_out),1,p)
+        # lin_output = T.dot(input, output_mask * self.W) + self.b
+        #### dropconnect ####
 
         lin_output = T.dot(input, self.W) + self.b
         self.output = (
@@ -110,9 +113,10 @@ class HiddenLayer(object):
             else activation(lin_output)
         )
 
-        # If want to simulate dropout
-        output_mask = srng.binomial((n_out,),1,p)
-        self.output = output_mask*self.output
+        #### dropout ####
+        # output_mask = srng.binomial((n_out,),1,p)
+        # self.output = output_mask*self.output
+        #### end ####
 
         # parameters of the model
         self.params = [self.W, self.b]
@@ -215,7 +219,7 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
     This is demonstrated on MNIST.
 
     :type p: float
-    :param p: binomial distribution parameter in dropconnect step
+    :param p: binomial distribution parameter in dropconnect/dropout step
 
     :type learning_rate: float
     :param learning_rate: learning rate used (factor for the stochastic
@@ -260,7 +264,7 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
     y = T.ivector('y')  # the labels are presented as 1D vector of
                         # [int] labels
 
-    rng = numpy.random.RandomState(1234)
+    rng = numpy.random.RandomState(930508)
 
     # construct the MLP class
     classifier = MLP(
@@ -404,7 +408,7 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
                            'best model %f %%') %
                           (epoch, minibatch_index + 1, n_train_batches,
                            test_score * 100.))'''
-                    print test_score * 100.
+                    print test_score * 100
 
             if patience <= iter:
                 done_looping = True
@@ -420,8 +424,5 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
 
 
 if __name__ == '__main__':
-    # test_mlp(0.5)
-    # default, p=0.8
-    # test_mlp(p=0.9, n_hidden = 100)
-    # the number of hidden units is also a parameter, default is n_hidden=50
+  # default: test_mlp(p=0.99, n_hidden = 500)
     test_mlp()
