@@ -111,13 +111,13 @@ class LeNetConvPoolLayer(object):
         self.params = [self.W, self.b]
 
 
-def evaluate_lenet5(p=0.8, learning_rate=0.1, n_epochs=200,
+def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
                     dataset='mnist.pkl.gz',
                     nkerns=[20, 50], batch_size=500):
     """ Demonstrates lenet on MNIST dataset
 
     :type p: float
-    :param p: binomial distribution parameter in dropconnet process
+    :param p: binomial distribution parameter in dropconnet/dropout process
 
     :type learning_rate: float
     :param learning_rate: learning rate used (factor for the stochastic
@@ -133,7 +133,7 @@ def evaluate_lenet5(p=0.8, learning_rate=0.1, n_epochs=200,
     :param nkerns: number of kernels on each layer
     """
 
-    rng = numpy.random.RandomState(23455)
+    rng = numpy.random.RandomState(930508)
 
     datasets = load_data(dataset)
 
@@ -340,8 +340,7 @@ def evaluate_lenet5(p=0.8, learning_rate=0.1, n_epochs=200,
                           ' ran for %.2fm' % ((end_time - start_time) / 60.))
 
 if __name__ == '__main__':
-    # evaluate_lenet5(p=0.5)
-    # default p = 0.8
+    # default evaluate_lenet(p = 0.99)
     evaluate_lenet5()
 
 def experiment(state, channel):
