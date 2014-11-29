@@ -221,6 +221,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=50,
 
 
    """
+    print ("number of hidden units: %d" % n_hidden)
     datasets = load_data(dataset)
 
     train_set_x, train_set_y = datasets[0]
@@ -248,7 +249,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=50,
     # construct the MLP class
     n_in = train_set_x.get_value(borrow=True).shape[1]
     n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
-    print n_in, n_out
+    # print n_in, n_out
     classifier = MLP(
         rng=rng,
         input=x,
@@ -398,10 +399,11 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=50,
     end_time = time.clock()
     '''print(('Optimization complete. Best validation score of %f %% '
            'obtained at iteration %i, with test performance %f %%') %
-          (best_validation_loss * 100., best_iter + 1, test_score * 100.))
+          (best_validation_loss * 100., best_iter + 1, test_score *
+          100.))'''
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time) / 60.))'''
+                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
 
 
 if __name__ == '__main__':

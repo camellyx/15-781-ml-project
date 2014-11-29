@@ -256,7 +256,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
         validation_losses = [validate_model(i * batch_size)
                              for i in xrange(n_valid_batches)]
         this_validation_loss = numpy.mean(validation_losses)
-        print('validation error %f %%' % (this_validation_loss * 100.,))
+        print(this_validation_loss * 100.)
 
         # check if it is better then best validation score got until now
         if this_validation_loss < validation_scores[0]:
@@ -274,6 +274,7 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
     # using scipy conjugate gradient optimizer
     import scipy.optimize
     print ("Optimizing using scipy.optimize.fmin_cg...")
+    print ("Validation errors:")
     start_time = time.clock()
     best_w_b = scipy.optimize.fmin_cg(
         f=train_fn,
@@ -284,13 +285,14 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
         maxiter=n_epochs
     )
     end_time = time.clock()
-    print(
+    '''print(
         (
             'Optimization complete with best validation score of %f %%, with '
             'test performance %f %%'
         )
         % (validation_scores[0] * 100., validation_scores[1] * 100.)
-    )
+    )'''
+
 
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
@@ -298,4 +300,5 @@ def cg_optimization_mnist(n_epochs=50, mnist_pkl_gz='mnist.pkl.gz'):
 
 
 if __name__ == '__main__':
-    cg_optimization_mnist(mnist_pkl_gz='cifar-100-python.tar.gz')
+    #cg_optimization_mnist(mnist_pkl_gz='cifar-100-python.tar.gz')
+    cg_optimization_mnist()

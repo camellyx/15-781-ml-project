@@ -190,11 +190,11 @@ def load_data(dataset):
         )
         data_dir = "../data"
         dataset = new_path
-    
+
     # for mnist
     def shared_dataset(data_xy, borrow=True):
         """ Function that loads the dataset into shared variables
-    
+
         The reason we store our dataset in shared variables is to allow
         Theano to copy it into the GPU memory (when code is run on GPU).
         Since copying data into the GPU is slow, copying a minibatch everytime
@@ -216,7 +216,7 @@ def load_data(dataset):
         # ``shared_y`` we will have to cast it to int. This little hack
         # lets ous get around this issue
         return shared_x, T.cast(shared_y, 'int32')
-    
+
     ##############
     # load mnist #
     ##############
@@ -227,9 +227,9 @@ def load_data(dataset):
             )
             print 'Downloading data from %s' % origin
             urllib.urlretrieve(origin, dataset)
-    
+
         print '... loading data'
-        
+
         # Load the dataset
         f = gzip.open(dataset, 'rb')
         train_set, valid_set, test_set = cPickle.load(f)
@@ -240,15 +240,15 @@ def load_data(dataset):
         #numpy.ndarray of 1 dimensions (vector)) that have the same length as
         #the number of rows in the input. It should give the target
         #target to the example with the same index in the input.
-        
+
         test_set_x, test_set_y = shared_dataset(test_set)
         valid_set_x, valid_set_y = shared_dataset(valid_set)
         train_set_x, train_set_y = shared_dataset(train_set)
-        
+
         rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
                 (test_set_x, test_set_y)]
         return rval
-     
+
     # for cifar
     def load_dict(filename, x_label, y_label, borrow=True):
         f = open(filename)
@@ -263,7 +263,7 @@ def load_data(dataset):
                                                dtype=theano.config.floatX),
                                  borrow=borrow)
         return shared_x, shared_y
-    
+
     ##############
     # load cifar #
     ##############
@@ -278,9 +278,9 @@ def load_data(dataset):
             tar = tarfile.open(dataset)
             tar.extractall(data_dir)
             tar.close()
-    
+
         print '... loading data'
-        
+
         train_set_x1, train_set_y1 = load_dict(os.path.join(data_dir,
           "cifar-10-batches-py", "data_batch_1"), "data", "labels")
         train_set_x2, train_set_y2 = load_dict(os.path.join(data_dir,
@@ -326,9 +326,9 @@ def load_data(dataset):
         tar = tarfile.open(dataset)
         tar.extractall(data_dir)
         tar.close()
-    
+
         print '... loading data'
-        
+
         test_set_x, test_set_y = load_dict(os.path.join(data_dir,
           "cifar-100-python", "test"), "data", "coarse_labels")
         test_set_y = T.cast(test_set_y, 'int32')
@@ -390,7 +390,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     # Each MNIST image has size 28*28
     n_in = train_set_x.get_value(borrow=True).shape[1]
     n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
-    print n_in, n_out
+    # print n_in, n_out
     classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
@@ -478,7 +478,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                                      for i in xrange(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
 
-                print(
+                '''print(
                     'epoch %i, minibatch %i/%i, validation error %f %%' %
                     (
                         epoch,
@@ -486,7 +486,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                         n_train_batches,
                         this_validation_loss * 100.
                     )
-                )
+                )'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -502,7 +502,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                                    for i in xrange(n_test_batches)]
                     test_score = numpy.mean(test_losses)
 
-                    print(
+                    '''print(
                         (
                             '     epoch %i, minibatch %i/%i, test error of'
                             ' best model %f %%'
@@ -513,20 +513,21 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                             n_train_batches,
                             test_score * 100.
                         )
-                    )
+                    )'''
+                    print test_score * 100.
 
             if patience <= iter:
                 done_looping = True
                 break
 
     end_time = time.clock()
-    print(
+    '''print(
         (
             'Optimization complete with best validation score of %f %%,'
             'with test performance %f %%'
         )
         % (best_validation_loss * 100., test_score * 100.)
-    )
+    )'''
     print 'The code run for %d epochs, with %f epochs/sec' % (
         epoch, 1. * epoch / (end_time - start_time))
     print >> sys.stderr, ('The code for file ' +
@@ -534,5 +535,5 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                           ' ran for %.1fs' % ((end_time - start_time)))
 
 if __name__ == '__main__':
-    sgd_optimization_mnist(dataset='cifar-100-python.tar.gz')
-    #sgd_optimization_mnist()
+    #sgd_optimization_mnist(dataset='cifar-100-python.tar.gz')
+    sgd_optimization_mnist()
