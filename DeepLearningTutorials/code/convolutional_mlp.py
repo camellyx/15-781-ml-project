@@ -130,7 +130,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     :param nkerns: number of kernels on each layer
     """
 
-    rng = numpy.random.RandomState(23455)
+    rng = numpy.random.RandomState(930508)
 
     datasets = load_data(dataset)
 
@@ -263,8 +263,8 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     patience = 10000  # look as this many examples regardless
     patience_increase = 2  # wait this much longer when a new best is
                            # found
-    improvement_threshold = 0.995  # a relative improvement of this much is
-                                   # considered significant
+    improvement_threshold = 0.995 # a relative improvement of this much is
+                                  # considered significant
     validation_frequency = min(n_train_batches, patience / 2)
                                   # go through this many
                                   # minibatche before checking the network
@@ -285,8 +285,8 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
             iter = (epoch - 1) * n_train_batches + minibatch_index
 
-            if iter % 100 == 0:
-                print 'training @ iter = ', iter
+            # if iter % 10 == 0:
+                # print 'training @ iter = ', iter
             cost_ij = train_model(minibatch_index)
 
             if (iter + 1) % validation_frequency == 0:
@@ -295,9 +295,9 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                 validation_losses = [validate_model(i) for i
                                      in xrange(n_valid_batches)]
                 this_validation_loss = numpy.mean(validation_losses)
-                print('epoch %i, minibatch %i/%i, validation error %f %%' %
+                '''print('epoch %i, minibatch %i/%i, validation error %f %%' %
                       (epoch, minibatch_index + 1, n_train_batches,
-                       this_validation_loss * 100.))
+                       this_validation_loss * 100.))'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -317,20 +317,22 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                         for i in xrange(n_test_batches)
                     ]
                     test_score = numpy.mean(test_losses)
-                    print(('     epoch %i, minibatch %i/%i, test error of '
+                    '''print(('     epoch %i, minibatch %i/%i, test error of '
                            'best model %f %%') %
                           (epoch, minibatch_index + 1, n_train_batches,
-                           test_score * 100.))
+                           test_score * 100.))'''
+                    print test_score * 100.
 
             if patience <= iter:
                 done_looping = True
                 break
 
     end_time = time.clock()
-    print('Optimization complete.')
+    '''print('Optimization complete.')
     print('Best validation score of %f %% obtained at iteration %i, '
           'with test performance %f %%' %
-          (best_validation_loss * 100., best_iter + 1, test_score * 100.))
+          (best_validation_loss * 100., best_iter + 1, test_score *
+          100.))a'''
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
                           ' ran for %.2fm' % ((end_time - start_time) / 60.))
