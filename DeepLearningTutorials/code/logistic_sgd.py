@@ -236,7 +236,7 @@ def load_data(dataset):
         f.close()
         #train_set, valid_set, test_set format: tuple(input, target)
         #input is an numpy.ndarray of 2 dimensions (a matrix)
-        #witch row's correspond to an example. target is a
+        #with row's correspond to an example. target is a
         #numpy.ndarray of 1 dimensions (vector)) that have the same length as
         #the number of rows in the input. It should give the target
         #target to the example with the same index in the input.
@@ -256,11 +256,19 @@ def load_data(dataset):
         f.close()
         data_x = dict_xy[x_label]
         data_y = dict_xy[y_label]
+
+
+        coeff_R = 0.2126
+        coeff_G = 0.7152
+        coeff_B = 0.0722
+
+        data_x = coeff_R*data_x[:,:1024] + coeff_G*data_x[:,1024:2048] + coeff_B*data_x[:, 2048:]
+
         shared_x = theano.shared(numpy.asarray(data_x,
-                                               dtype=theano.config.floatX) / 256,
+                                 dtype=theano.config.floatX) / 256,
                                  borrow=borrow)
         shared_y = theano.shared(numpy.asarray(data_y,
-                                               dtype=theano.config.floatX),
+                                 dtype=theano.config.floatX),
                                  borrow=borrow)
         return shared_x, shared_y
 
@@ -291,6 +299,7 @@ def load_data(dataset):
           "cifar-10-batches-py", "data_batch_4"), "data", "labels")
         train_set_x5, train_set_y5 = load_dict(os.path.join(data_dir,
           "cifar-10-batches-py", "data_batch_5"), "data", "labels")
+
         train_set_x = theano.shared(numpy.concatenate((train_set_x1.get_value(),
                                                        train_set_x2.get_value(),
                                                        train_set_x3.get_value(),
@@ -298,6 +307,8 @@ def load_data(dataset):
                                                        train_set_x5.get_value()),
                                                       axis=0),
                                     borrow=True)
+        train_set_x = theano.shared(train_set_x1.get_value(), borrow=True)
+
         train_set_y = theano.shared(numpy.concatenate((train_set_y1.get_value(),
                                                        train_set_y2.get_value(),
                                                        train_set_y3.get_value(),
@@ -305,6 +316,8 @@ def load_data(dataset):
                                                        train_set_y5.get_value()),
                                                       axis=0),
                                     borrow=True)
+        train_set_y = theano.shared(train_set_y1.get_value(), borrow=True)
+
         train_set_y = T.cast(train_set_y, 'int32')
         test_set_x, test_set_y = load_dict(os.path.join(data_dir,
           "cifar-10-batches-py", "test_batch"), "data", "labels")
@@ -388,9 +401,11 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # construct the logistic regression class
     # Each MNIST image has size 28*28
+    # parameterize training data set dimensions
     n_in = train_set_x.get_value(borrow=True).shape[1]
     n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
     # print n_in, n_out
+
     classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
