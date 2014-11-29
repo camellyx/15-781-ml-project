@@ -162,8 +162,13 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # Reshape matrix of rasterized images of shape (batch_size, 28 * 28)
     # to a 4D tensor, compatible with our LeNetConvPoolLayer
     # (28, 28) is the size of MNIST images.
-    layer0_input = x.reshape((batch_size, 1, 28, 28))
 
+    # Parameterizing
+    n_feature = train_set_x.get_value().shape[1]
+    matrix_dim = numpy.sqrt(n_feature)
+    matrix_dim = matrix_dim.astype('int8')
+
+    layer0_input = x.reshape((batch_size, 1, matrix_dim, matrix_dim))
     # Construct the first convolutional pooling layer:
     # filtering reduces the image size to (28-5+1 , 28-5+1) = (24, 24)
     # maxpooling reduces this further to (24/2, 24/2) = (12, 12)
@@ -171,7 +176,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     layer0 = LeNetConvPoolLayer(
         rng,
         input=layer0_input,
-        image_shape=(batch_size, 1, 28, 28),
+        image_shape = (batch_size, 1, matrix_dim, matrix_dim),
         filter_shape=(nkerns[0], 1, 5, 5),
         poolsize=(2, 2)
     )
@@ -180,10 +185,11 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # filtering reduces the image size to (12-5+1, 12-5+1) = (8, 8)
     # maxpooling reduces this further to (8/2, 8/2) = (4, 4)
     # 4D output tensor is thus of shape (nkerns[0], nkerns[1], 4, 4)
+    temp1 = (matrix_dim-5+1)/2
     layer1 = LeNetConvPoolLayer(
         rng,
         input=layer0.output,
-        image_shape=(batch_size, nkerns[0], 12, 12),
+        image_shape = (batch_size, nkerns[0],temp1,temp1),
         filter_shape=(nkerns[1], nkerns[0], 5, 5),
         poolsize=(2, 2)
     )
@@ -195,16 +201,19 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     layer2_input = layer1.output.flatten(2)
 
     # construct a fully-connected sigmoidal layer
+    temp2 = (temp1-5+1)/2
     layer2 = HiddenLayer(
         rng,
         input=layer2_input,
-        n_in=nkerns[1] * 4 * 4,
+        n_in=nkerns[1] * temp2 * temp2,
         n_out=500,
         activation=T.tanh
     )
 
     # classify the values of the fully-connected sigmoidal layer
-    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    # print n_out
+    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=n_out)
 
     # the cost we minimize during training is the NLL of the model
     cost = layer3.negative_log_likelihood(y)
