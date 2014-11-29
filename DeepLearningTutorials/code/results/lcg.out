@@ -1,54 +1,54 @@
 ... loading data
 ... building the model
 Optimizing using scipy.optimize.fmin_cg...
-validation error 30.130000 %
-validation error 24.300000 %
-validation error 20.660000 %
-validation error 16.850000 %
-validation error 14.220000 %
-validation error 13.950000 %
-validation error 13.030000 %
-validation error 12.110000 %
-validation error 11.600000 %
-validation error 11.710000 %
-validation error 10.290000 %
-validation error 10.000000 %
-validation error 9.820000 %
-validation error 9.840000 %
-validation error 9.300000 %
-validation error 9.520000 %
-validation error 9.340000 %
-validation error 8.980000 %
-validation error 8.930000 %
-validation error 9.000000 %
-validation error 8.900000 %
-validation error 8.140000 %
-validation error 8.160000 %
-validation error 7.990000 %
-validation error 8.010000 %
-validation error 8.030000 %
-validation error 7.910000 %
-validation error 7.910000 %
-validation error 7.790000 %
-validation error 7.710000 %
-validation error 7.610000 %
-validation error 7.690000 %
-validation error 7.730000 %
-validation error 7.770000 %
-validation error 7.620000 %
-validation error 7.600000 %
-validation error 7.560000 %
-validation error 7.590000 %
-validation error 7.610000 %
-validation error 7.400000 %
-validation error 7.370000 %
-validation error 7.390000 %
-validation error 7.470000 %
-validation error 7.440000 %
-validation error 7.450000 %
-validation error 7.460000 %
-validation error 7.380000 %
-validation error 7.370000 %
-validation error 7.370000 %
-validation error 7.390000 %
-Optimization complete with best validation score of 7.370000 %, with test performance 7.780000 %
+Validation errors:
+30.13
+24.3
+20.66
+16.85
+14.22
+13.95
+13.03
+12.11
+11.6
+11.71
+10.29
+10.0
+9.82
+9.84
+9.3
+9.52
+9.34
+8.98
+8.93
+9.0
+8.9
+8.14
+8.16
+7.99
+8.01
+8.03
+7.91
+7.91
+7.79
+7.71
+7.61
+7.69
+7.73
+7.77
+7.62
+7.6
+7.56
+7.59
+7.61
+7.4
+7.37
+7.39
+7.47
+7.44
+7.45
+7.46
+7.38
+7.37
+7.37
+7.39

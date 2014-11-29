@@ -1,3 +1,5 @@
+number of hidden units: 500
+dropping probability: 0.990000
 ... loading data
 ... building the model
 ... training
@@ -36,4 +38,17 @@
 3.08
 2.92
 2.95
+2.81
 2.78
+2.72
+2.69
+2.53
+2.56
+2.53
+2.4
+2.4
+2.29
+2.33
+2.27
+2.32
+2.16

@@ -1,6 +1,6 @@
+number of hidden units: 500
 ... loading data
 ... building the model
-784 10
 ... training
 10.09
 8.74
