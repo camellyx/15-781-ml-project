@@ -216,7 +216,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=500,
     # Each MNIST image has size 28*28
     n_in = train_set_x.get_value(borrow=True).shape[1]
     n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
-    print n_in, n_out
+    # print n_in, n_out
     classifier = LogisticRegression(input=x, n_in=n_in, n_out=n_out)
 
     # the cost we minimize during training is the negative log likelihood of
@@ -358,10 +358,10 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=500,
         % (best_validation_loss * 100., test_score * 100.)
     )
     print 'The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time))
+        epoch, 1. * epoch / (end_time - start_time))'''
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time)))'''
+                          ' ran for %.1fs' % ((end_time - start_time)))
 
 if __name__ == '__main__':
     sgd_optimization_mnist()
