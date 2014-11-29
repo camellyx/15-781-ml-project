@@ -33,7 +33,7 @@ from theano.tensor.signal import downsample
 from theano.tensor.nnet import conv
 
 from logistic_sgd import LogisticRegression, load_data
-from mlp_dropConnet import HiddenLayer
+from mlp_dropConnect import HiddenLayer
 
 
 class LeNetConvPoolLayer(object):
