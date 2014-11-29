@@ -111,13 +111,10 @@ class LeNetConvPoolLayer(object):
         self.params = [self.W, self.b]
 
 
-def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
+def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                     dataset='mnist.pkl.gz',
                     nkerns=[20, 50], batch_size=500):
     """ Demonstrates lenet on MNIST dataset
-
-    :type p: float
-    :param p: binomial distribution parameter in dropconnet/dropout process
 
     :type learning_rate: float
     :param learning_rate: learning rate used (factor for the stochastic
@@ -165,8 +162,13 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     # Reshape matrix of rasterized images of shape (batch_size, 28 * 28)
     # to a 4D tensor, compatible with our LeNetConvPoolLayer
     # (28, 28) is the size of MNIST images.
-    layer0_input = x.reshape((batch_size, 1, 28, 28))
 
+    # Parameterizing
+    n_feature = train_set_x.get_value().shape[1]
+    matrix_dim = numpy.sqrt(n_feature)
+    matrix_dim = matrix_dim.astype('int8')
+
+    layer0_input = x.reshape((batch_size, 1, matrix_dim, matrix_dim))
     # Construct the first convolutional pooling layer:
     # filtering reduces the image size to (28-5+1 , 28-5+1) = (24, 24)
     # maxpooling reduces this further to (24/2, 24/2) = (12, 12)
@@ -174,7 +176,7 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     layer0 = LeNetConvPoolLayer(
         rng,
         input=layer0_input,
-        image_shape=(batch_size, 1, 28, 28),
+        image_shape = (batch_size, 1, matrix_dim, matrix_dim),
         filter_shape=(nkerns[0], 1, 5, 5),
         poolsize=(2, 2)
     )
@@ -183,10 +185,11 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     # filtering reduces the image size to (12-5+1, 12-5+1) = (8, 8)
     # maxpooling reduces this further to (8/2, 8/2) = (4, 4)
     # 4D output tensor is thus of shape (nkerns[0], nkerns[1], 4, 4)
+    temp1 = (matrix_dim-5+1)/2
     layer1 = LeNetConvPoolLayer(
         rng,
         input=layer0.output,
-        image_shape=(batch_size, nkerns[0], 12, 12),
+        image_shape = (batch_size, nkerns[0],temp1,temp1),
         filter_shape=(nkerns[1], nkerns[0], 5, 5),
         poolsize=(2, 2)
     )
@@ -198,17 +201,19 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     layer2_input = layer1.output.flatten(2)
 
     # construct a fully-connected sigmoidal layer
+    temp2 = (temp1-5+1)/2
     layer2 = HiddenLayer(
         rng,
         input=layer2_input,
-        p = p,
-        n_in=nkerns[1] * 4 * 4,
+        n_in=nkerns[1] * temp2 * temp2,
         n_out=500,
         activation=T.tanh
     )
 
     # classify the values of the fully-connected sigmoidal layer
-    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    # print n_out
+    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=n_out)
 
     # the cost we minimize during training is the NLL of the model
     cost = layer3.negative_log_likelihood(y)
@@ -267,8 +272,8 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     patience = 10000  # look as this many examples regardless
     patience_increase = 2  # wait this much longer when a new best is
                            # found
-    improvement_threshold = 0.995  # a relative improvement of this much is
-                                   # considered significant
+    improvement_threshold = 0.995 # a relative improvement of this much is
+                                  # considered significant
     validation_frequency = min(n_train_batches, patience / 2)
                                   # go through this many
                                   # minibatche before checking the network
@@ -289,8 +294,8 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
 
             iter = (epoch - 1) * n_train_batches + minibatch_index
 
-            '''if iter % 100 == 0:
-                print 'training @ iter = ', iter'''
+            # if iter % 10 == 0:
+                # print 'training @ iter = ', iter
             cost_ij = train_model(minibatch_index)
 
             if (iter + 1) % validation_frequency == 0:
@@ -301,7 +306,7 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
                 this_validation_loss = numpy.mean(validation_losses)
                 '''print('epoch %i, minibatch %i/%i, validation error %f %%' %
                       (epoch, minibatch_index + 1, n_train_batches,
-                      this_validation_loss * 100.))'''
+                       this_validation_loss * 100.))'''
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
@@ -336,11 +341,10 @@ def evaluate_lenet5(p=0.99, learning_rate=0.1, n_epochs=200,
     print('Best validation score of %f %% obtained at iteration %i, '
           'with test performance %f %%' %
           (best_validation_loss * 100., best_iter + 1, test_score *
-          100.))'''
+          100.))a'''
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
                           ' ran for %.2fm' % ((end_time - start_time) / 60.))
 
 if __name__ == '__main__':
-    # default evaluate_lenet(p = 0.99)
     evaluate_lenet5()
