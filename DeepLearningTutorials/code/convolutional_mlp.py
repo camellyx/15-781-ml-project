@@ -337,7 +337,3 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
 if __name__ == '__main__':
     evaluate_lenet5()
-
-
-def experiment(state, channel):
-    evaluate_lenet5(state.learning_rate, dataset=state.dataset)
