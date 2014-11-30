@@ -407,4 +407,4 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=50,
 
 
 if __name__ == '__main__':
-    test_mlp(dataset='cifar-10-python.tar.gz')
+    test_mlp()
