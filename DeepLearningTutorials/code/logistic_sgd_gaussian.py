@@ -364,4 +364,4 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=500,
                           ' ran for %.1fs' % ((end_time - start_time)))
 
 if __name__ == '__main__':
-    sgd_optimization_mnist(dataset='cifar-10-python.tar.gz')
+    sgd_optimization_mnist()

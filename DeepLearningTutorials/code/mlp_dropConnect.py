@@ -29,6 +29,7 @@ import numpy
 
 import theano
 import theano.tensor as T
+
 from logistic_sgd import LogisticRegression, load_data
 from theano.tensor.shared_randomstreams import RandomStreams
 
@@ -129,7 +130,6 @@ class MLP(object):
 
     def __init__(self, rng, input, p, n_in, n_hidden, n_out):
         """Initialize the parameters for the multilayer perceptron
-
         :type p: float
         :param p: binomial distribution parameter in dropconnect step
 
@@ -169,7 +169,7 @@ class MLP(object):
         # The logistic regression layer gets as input the hidden units
         # of the hidden layer
         self.logRegressionLayer = LogisticRegression(
-            input = self.hiddenLayer.output,
+            input=self.hiddenLayer.output,
             n_in=n_hidden,
             n_out=n_out
         )
@@ -203,16 +203,13 @@ class MLP(object):
         # end-snippet-3
 
 
-def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
-    n_epochs=100, dataset='mnist.pkl.gz', batch_size=20, n_hidden=500):
+def test_mlp(p = 0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
+    n_epochs=50, dataset='mnist.pkl.gz', batch_size=20, n_hidden=500):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
 
     This is demonstrated on MNIST.
-
-    :type p: float
-    :param p: binomial distribution parameter in dropconnect/dropout step
 
     :type learning_rate: float
     :param learning_rate: learning rate used (factor for the stochastic
@@ -237,7 +234,6 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
    """
     print ("number of hidden units: %d" % n_hidden)
     print ("dropping probability: %f" % p)
-
     datasets = load_data(dataset)
 
     train_set_x, train_set_y = datasets[0]
@@ -260,16 +256,20 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
     y = T.ivector('y')  # the labels are presented as 1D vector of
                         # [int] labels
 
-    rng = numpy.random.RandomState(930508)
+    rng = numpy.random.RandomState(1234)
 
     # construct the MLP class
+    n_in = train_set_x.get_value(borrow=True).shape[1]
+    n_out = max(train_set_y.eval()) - min(train_set_y.eval()) + 1
+    # print n_in, n_out
+
     classifier = MLP(
         rng=rng,
         input=x,
         p = p,
-        n_in=28 * 28,
+        n_in=n_in,
         n_hidden=n_hidden,
-        n_out=10
+        n_out=n_out
     )
 
     # start-snippet-4
@@ -421,5 +421,4 @@ def test_mlp(p=0.99, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001,
 
 
 if __name__ == '__main__':
-  # default: test_mlp(p=0.99, n_hidden = 500)
-    test_mlp()
+    test_mlp(dataset='cifar-10-python.tar.gz')
