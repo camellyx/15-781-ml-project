@@ -105,7 +105,7 @@ class HiddenLayer(object):
         srngN = RandomStreams(seed=930508)
         srngB = RandomStreams(seed=508)
         maskN = srngN.normal((n_in,n_out),0, sigma)
-        maskB = srngB.binomial((n_in, n_out),0,0.99)
+        maskB = srngB.binomial((n_in, n_out),1,0.99)
         output_mask = maskN * maskB
         lin_output = T.dot(input, output_mask + self.W) + self.b
 
