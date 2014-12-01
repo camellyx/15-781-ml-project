@@ -205,6 +205,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     layer2 = HiddenLayer(
         rng,
         input=layer2_input,
+        p = 0.99,
         n_in=nkerns[1] * temp2 * temp2,
         n_out=500,
         activation=T.tanh
