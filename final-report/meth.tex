@@ -1,0 +1,69 @@
+\section{Proposed Method}
+\label{sec:method}
+
+% Intuition - why should it be better than the state of the art?
+% Description of its algorithms
+
+In this project, we explore three neural network models---single-layer
+neural network (logistic regression), multi-layer neural netwrok (mlp),
+convolutional neural network (LeNet).
+% Pictures of neural networks form poster?
+
+We introduce noise into four different components in the model---weights
+between input layer and hidden layer, weights between hidden layer and
+output layer, update of gradient in logistic regression and feature
+mapping in convolutional neural network.
+The noise comes from combination of the following distributions: Gaussian,
+Binomial, Gamma and Rayleigh.
+
+We experiment on three datasets---a hand-written digit dataset (MNIST),
+two tiny images datasets (CIFAR-10 and CIFAR-100).
+Specifications of datasets are summarized in Table~\ref{datasets}.
+\vspace{-7pt}
+\begin{table}[!htbp]
+\centering
+\caption{Datasets: MNIST, CIFAR-10, CIFAR-100}
+\label{datasets}
+\begin{tabular}{| c | c | c | c | c |}
+\hline
+Dataset & Description & Class & Training Set Size & Testing Set Size \\
+\hline
+MNIST & hand-written digists & 10 & 60,000 & 10,000\\
+CIFAR-10 & 32x32 RGB images & 10 & 50,000 & 10,000\\
+CIFAR-100 & 32x32 RGB images & 10 & 50,000 & 10,000\\
+\hline
+\end{tabular}
+\end{table}
+
+We preprocess CIFAR-10 and CIFAR-100 by grey-scaling every image using the following formula:
+\[
+Y = 0.2126 * R + 0.7152 * G + 0.0722 * B
+\]
+In other words, every pixel in the image is now a linear combination of its
+original RGB values. These two datasets are preprocessed due to technical
+implementation limitations (which will be fixed after the deadline), not
+machine learning theory reasons.
+
+Our neural netwoek models are implemented using Python Theono Library. The
+starter code is from DeepLearning.net. Parameters of each neural
+network models are summarized in Table~\ref{params}.
+\vspace{-7pt}
+\begin{table}[!htbp]
+\centering
+\caption{Parameters of Neural Network Models}
+\label{params}
+\begin{tabular}{| c | c |}
+\hline
+Model & Parameters \\
+\hline
+Logistic Regression (LR) & learning rate = 0.13 \\
+Multi-layer Logistic Regression (MLP) & LR + hidden units = 500 \\
+Convolutional Neural Network & MLP + window size = 5x5, downsample = 2x2\\
+\hline
+\end{tabular}
+\end{table}
+
+We use stochastic logistic regression with learning rate = 0.13.
+In Multi-layer Logistic Regression, there are 500 neurons in the hidden
+layer. During feature mapping of Convolutional Neural Network, windows
+are of size 5 by 5 and downsample is of size 2 by 2.

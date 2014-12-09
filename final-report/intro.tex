@@ -1,0 +1,31 @@
+\section{Introduction}
+\label{sec:intro}
+% Motivation
+
+Large-scale deep neutral network models have become increasingly popular to
+solve hard classification problems and have demonstrated significant
+improvements in accuracy. Due to the scale of the neutral network and the
+scale of the input data set, performance, in addition to accuracy, has
+become a significant factor in such implementations.
+
+Recent work~\cite{chilimbi14adam,wan2013dropconnect} on large-scale
+machine learning systems propose to significantly improve the accuracy
+by relaxing the consistency when training neural network models (e.g.
+weights will not be updated every iteration). One interesting observation
+in these papers, alongside the above one, is that relaxation
+surprisingly improves the accuracy of the model.
+
+The hypothesis of this observation (in~\cite{chilimbi14adam}) is that
+relaxing consistency introduces stochastic noise into training process.
+This implicitly mitigates over-fitting of the model and generalizes the
+model better to classify test data.
+
+Our work, taking previous works as examples and guidance, tries to
+study the effect of introducing different noise into different
+components of deep learning neural networks. We focus on introducing
+noise into training process of neural networks instead of into dataset.
+We hope that our work can provide insights into future exploration of
+hardware approximate computation/storage techniques to accelerate and
+improve the accuracy of large-scale deep learning models.
+
+% Related works?
