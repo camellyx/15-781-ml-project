@@ -1,24 +1,43 @@
 \section{Introduction}
 \label{sec:intro}
-% Motivation
 
 Large-scale deep neutral network models have become increasingly popular to
 solve hard classification problems and have demonstrated significant
-improvements in accuracy. Due to the scale of the neutral network and the
-scale of the input data set, performance, in addition to accuracy, has
-become a significant factor in such implementations.
+improvements in accuracy. Compared to traditional statistical machine learning
+methods, which require a human domain expert that can construct a good set of
+features as input dataset, deep learning models do not require a hand crafted
+feature set to begin with, and hence is more powerful and suitable for hard AI
+tasks such as speech recognition or visual object classification. Without any
+hand crafting of the raw input data, deep neural network machine learning models
+can learn a hierarchy of features by itself in the first several layers of
+neural network model. Then, in the deepest layer of the model, a set of features
+are selected and weighted for each output to generate a prediction. Avoiding the
+inevitable human error in feature selection, deep learning often outperforms
+traditional approaches in those hard classification problems in terms of
+accuracy.
 
-Recent work~\cite{chilimbi14adam,wan2013dropconnect} on large-scale
-machine learning systems propose to significantly improve the accuracy
-by relaxing the consistency when training neural network models (e.g.
-weights will not be updated every iteration). One interesting observation
-in these papers, alongside the above one, is that relaxation
-surprisingly improves the accuracy of the model.
+In order to train a more complicated model which includes feature selection
+capability, deep neural network is typically trained with more data than a
+traditional machine learning method. Due to the scale of the deep neutral
+network (with multiple layers of neurons) and the scale of the input data set,
+the performance of these models, in addition to accuracy, has become a
+significant factor in such implementations. Recent
+work~\cite{chilimbi14adam,wan2013dropconnect} on large-scale machine learning
+systems propose to significantly improve the performance by relaxing the
+consistency when training neural network models (e.g.,  weights will not be
+updated in each iteration). One interesting observation in these papers,
+alongside the above one, is that relaxation surprisingly improves the {\em
+accuracy} of the deep learning model on the test data.
 
-The hypothesis of this observation (in~\cite{chilimbi14adam}) is that
-relaxing consistency introduces stochastic noise into training process.
-This implicitly mitigates over-fitting of the model and generalizes the
-model better to classify test data.
+However, the effect of noise on deep learning models has never been
+systematically studied, nor is the underlying reason for the improved accuracy.
+One hypothesis of the above observation is that relaxing consistency introduces
+stochastic noise into training process~\cite{chilimbi14adam}.  This implicitly
+mitigates over-fitting of the model and generalizes the model better to classify
+test data. Another hypothesis of this observation is that the introduced noise
+eliminates the memorization effect of a deep neural network, and hence allows
+the model to capture the general observation of the training data that can be
+applied to the test data well.
 
 Our work, taking previous works as examples and guidance, tries to
 study the effect of introducing different noise into different
