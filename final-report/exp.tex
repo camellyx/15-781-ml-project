@@ -46,7 +46,7 @@ neurons. Neurons in different layers are connected by weights.
 During a noise-free training process of the model, weights between layers
 are transmitted and updated without any loss of information or variances.
 However, during a noise-added training process, weights between layers are
-are subject to noises.
+are subject to some variation.
 To be more specific, let $W_{input}$ be the matrix of weights between
 input layer and hidden layer, $W_{output}$ be the matrix of weights
 between hidden layer and output layer. In a noise-added training procoss,
@@ -70,5 +70,21 @@ Multi-layer Logistic Regression.
 % explain the figure
 
 \subsection{Adding Noise into Convolutionary Neural Network}
-
+In these experiments, we introduce noise into feature mapping component of
+the model. The difference between Convolutionary Neural Network and
+Multi-layer Logistic Regression is that it has a feature mapping process
+before MLP. Feature mapping is the process where a small window moves along
+the image to extract local features. In other words, the window, acting as
+a function, will compute a linear combination of the underlying pixels.
+In a noise-added feature mapping process, the extracted feature is subject
+to some variation.
+Figure~\ref{convo} shows test error rate using noise-free and noise-added
+Convolutional Multi-layer Logistic Regression.
+\begin{figure}[!htbp]
+\centering
+\label{convo}
+\caption{Convolutionary Multi-layer Logistic Regression with Noise on
+MNIST}
+\includegraphics[width=295pt]{f-figs/convo.png}
+\end{figure}
 
