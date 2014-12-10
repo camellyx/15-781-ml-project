@@ -15,51 +15,30 @@ W_{new} = W_{old} - \lr \nabla_{W_{old}} \cost(W)
 \]
 In a noise-added Logistic Regression model, weights are updated as:
 \[
-W_{new}=W_{old}-\lr \left(\mask_{Bin}\cdot \nabla_{W_{old}}\cost(W) \right)
+W_{new}=W_{old}-\lr \left(\mask \cdot \nabla_{W_{old}}\cost(W) \right)
 \]
 or
 \[
-W_{new} = W_{old} -\lr \left(\mask_{Gau}+\nabla_{W_{old}} \cost(W) \right)
+W_{new} = W_{old} - \mask_{Gau} \cdot \nabla_{W_{old}} \cost(W)
 \]
 where learning rate is a scalar and mask is a vector that has the same dimension as $W_t$.
 
-We generate mask as a random vector from Binomial distribution $Bin(1,p)$
-and Gaussian distribution $\mathcal{N}(0, \sigma)$, respectively.
-
-We run experiments using different values of $p$ and $\sigma$.
+We generate mask as a random vector from Binomial distribution
+$Bin(1,0.5)$, Gaussian distribution $\mathcal{N}(\lr, 2 \cdot \lr)$,
+Rayleigh Distribution and Gamma Distribution $Gamma(1)$, respectively.
 Figure~\ref{logistic} shows test error rate using noise-free and
 noise-added Logistic Regression.
-
 \begin{figure}[!htbp]
 \centering
 \label{logistic}
 \caption{Logistic Regression with Noise}
-\includegraphics[ ]
+\includegraphics[width=\textwidth]{f-figs/logistic.png}
 \end{figure}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% explain the figure
 
 \subsection{Adding Noise into Multi-layer Logistic Regression}
+In these experiments, we introduce noise into
 
 \subsection{Adding Noise into Convolutionary Neural Network}
 
