@@ -25,20 +25,49 @@ where learning rate is a scalar and mask is a vector that has the same dimension
 
 We generate mask as a random vector from Binomial distribution
 $Bin(1,0.5)$, Gaussian distribution $\mathcal{N}(\lr, 2 \cdot \lr)$,
-Rayleigh Distribution and Gamma Distribution $Gamma(1)$, respectively.
+Rayleigh Distribution or Gamma Distribution $Gamma(1)$.
 Figure~\ref{logistic} shows test error rate using noise-free and
 noise-added Logistic Regression.
 \begin{figure}[!htbp]
 \centering
 \label{logistic}
-\caption{Logistic Regression with Noise}
-\includegraphics[width=\textwidth]{f-figs/logistic.png}
+\caption{Logistic Regression with Noise on MNIST}
+\includegraphics[width=295pt]{f-figs/logistic.png}
 \end{figure}
 
 % explain the figure
 
 \subsection{Adding Noise into Multi-layer Logistic Regression}
-In these experiments, we introduce noise into
+In these experiments, we introduce noise into weights between layers.
+In our Multi-layer Logistic Regression model, there are three layers:
+input layer, hidden layer and output layer. Each layer consists of
+neurons. Neurons in different layers are connected by weights.
+
+During a noise-free training process of the model, weights between layers
+are transmitted and updated without any loss of information or variances.
+However, during a noise-added training process, weights between layers are
+are subject to noises.
+To be more specific, let $W_{input}$ be the matrix of weights between
+input layer and hidden layer, $W_{output}$ be the matrix of weights
+between hidden layer and output layer. In a noise-added training procoss,
+we add combination of the following steps:
+\begin{align*}
+W_{input} & = W_{input} \cdot mask \\
+W_{output} & = W_{output} \cdot mask \\
+W_{input} & = W_{input} + mask
+\end{align*}
+where mask is a matrix of the same dimension as $W_{input}$ or $W_{output}$.
+We generate mask as a random matrix from Binomial Distribution
+$Bin(1,0.99)$ or Gaussian Distribution $\mathcal{N}(0, 0.01)$,
+Figure~\ref{mlp} shows test error rate using noise-free and noise-added
+Multi-layer Logistic Regression.
+\begin{figure}[!htbp]
+\centering
+\label{mlp}
+\caption{Multi-layer Logistic Regression with Noise on MNIST}
+\includegraphics[width=295pt]{f-figs/mlp.png}
+\end{figure}
+% explain the figure
 
 \subsection{Adding Noise into Convolutionary Neural Network}
 
