@@ -4,87 +4,108 @@
 % Description of your testbed;
 % List of questions your experiments are designed to answer.
 % Details of the experiments; observations.
+\subsection{Dataset and Implementation Parameters}
+We experiment on three datasets---a hand-written digit dataset (MNIST),
+two tiny images datasets (CIFAR-10 and CIFAR-100).
+Specifications of datasets are summarized in Table~\ref{datasets}.
+\vspace{-7pt}
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{| c | c | c | c | c |}
+\hline
+Dataset & Description & Class & Training Set Size & Testing Set Size \\
+\hline
+MNIST & hand-written digists & 10 & 60,000 & 10,000\\
+CIFAR-10 & 32x32 RGB images & 10 & 50,000 & 10,000\\
+CIFAR-100 & 32x32 RGB images & 10 & 50,000 & 10,000\\
+\hline
+\end{tabular}
+\caption{Datasets: MNIST, CIFAR-10, CIFAR-100}
+\label{datasets}
+\end{table}
+
+We preprocess CIFAR-10 and CIFAR-100 by grey-scaling every image using the following formula:
+\[
+Y = 0.2126 * R + 0.7152 * G + 0.0722 * B
+\]
+In other words, every pixel in the image is now a linear combination of its
+original RGB values. These two datasets are preprocessed due to technical
+implementation limitations (which will be fixed after the deadline), not
+machine learning theory reasons.
+
+Our neural netwoek models are implemented using Python Theono Library. The
+starter code is from DeepLearning.net. Parameters of each neural
+network models are summarized in Table~\ref{params}.
+\vspace{-7pt}
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{| c | c |}
+\hline
+Model & Parameters \\
+\hline
+Logistic Regression (LR) & learning rate = 0.13 \\
+Multi-layer Logistic Regression (MLP) & LR + hidden units = 500 \\
+Convolutional Neural Network & MLP + window size = 5x5, downsample = 2x2\\
+\hline
+\end{tabular}
+\caption{Parameters of Neural Network Models}
+\label{params}
+\end{table}
+
+We use stochastic logistic regression with learning rate = 0.13.
+In Multi-layer Logistic Regression, there are 500 neurons in the hidden
+layer. During feature mapping of Convolutional Neural Network, windows
+are of size 5 by 5 and downsample is of size 2 by 2.
 
 \subsection{Adding Noise into Logistic Regression}
-In these experiments, we intorduce noise into gradient descent component
-of Logistic Regression.
-To be more specific, in a noise-free Logistic Regression model, weights
-are updated in the following way:
-\[
-W_{new} = W_{old} - \lr \nabla_{W_{old}} \cost(W)
-\]
-In a noise-added Logistic Regression model, weights are updated as:
-\[
-W_{new}=W_{old}-\lr \left(\mask \cdot \nabla_{W_{old}}\cost(W) \right)
-\]
-or
-\[
-W_{new} = W_{old} - \mask_{Gau} \cdot \nabla_{W_{old}} \cost(W)
-\]
-where learning rate is a scalar and mask is a vector that has the same dimension as $W_t$.
-
-We generate mask as a random vector from Binomial distribution
-$Bin(1,0.5)$, Gaussian distribution $\mathcal{N}(\lr, 2 \cdot \lr)$,
-Rayleigh Distribution or Gamma Distribution $Gamma(1)$.
 Figure~\ref{logistic} shows test error rate using noise-free and
-noise-added Logistic Regression.
+noise-added Logistic Regression on MNIST.
 \begin{figure}[!htbp]
 \centering
-\label{logistic}
-\caption{Logistic Regression with Noise on MNIST}
 \includegraphics[width=295pt]{f-figs/logistic.png}
+\caption{Logistic Regression with Noise on MNIST}
+\label{logistic}
 \end{figure}
 
 % explain the figure
 
 \subsection{Adding Noise into Multi-layer Logistic Regression}
-In these experiments, we introduce noise into weights between layers.
-In our Multi-layer Logistic Regression model, there are three layers:
-input layer, hidden layer and output layer. Each layer consists of
-neurons. Neurons in different layers are connected by weights.
-
-During a noise-free training process of the model, weights between layers
-are transmitted and updated without any loss of information or variances.
-However, during a noise-added training process, weights between layers are
-are subject to some variation.
-To be more specific, let $W_{input}$ be the matrix of weights between
-input layer and hidden layer, $W_{output}$ be the matrix of weights
-between hidden layer and output layer. In a noise-added training procoss,
-we add combination of the following steps:
-\begin{align*}
-W_{input} & = W_{input} \cdot mask \\
-W_{output} & = W_{output} \cdot mask \\
-W_{input} & = W_{input} + mask
-\end{align*}
-where mask is a matrix of the same dimension as $W_{input}$ or $W_{output}$.
-We generate mask as a random matrix from Binomial Distribution
-$Bin(1,0.99)$ or Gaussian Distribution $\mathcal{N}(0, 0.01)$,
 Figure~\ref{mlp} shows test error rate using noise-free and noise-added
-Multi-layer Logistic Regression.
+Multi-layer Logistic Regression on MNIST.
 \begin{figure}[!htbp]
 \centering
-\label{mlp}
-\caption{Multi-layer Logistic Regression with Noise on MNIST}
 \includegraphics[width=295pt]{f-figs/mlp.png}
+\caption{Multi-layer Logistic Regression with Noise on MNIST}
+\label{mlp}
+\end{figure}
+% explain the figure
+
+Figure~\ref{mlp10} shows test error rate using noise-free and noise-added
+Multi-layer Logistic Regression on CIFAR-10.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=295pt]{f-figs/mlp10.png}
+\caption{Multi-layer Logistic Regression with Noise on CIFAR-10}
+\label{mlp10}
 \end{figure}
 % explain the figure
 
 \subsection{Adding Noise into Convolutionary Neural Network}
-In these experiments, we introduce noise into feature mapping component of
-the model. The difference between Convolutionary Neural Network and
-Multi-layer Logistic Regression is that it has a feature mapping process
-before MLP. Feature mapping is the process where a small window moves along
-the image to extract local features. In other words, the window, acting as
-a function, will compute a linear combination of the underlying pixels.
-In a noise-added feature mapping process, the extracted feature is subject
-to some variation.
 Figure~\ref{convo} shows test error rate using noise-free and noise-added
-Convolutional Multi-layer Logistic Regression.
+Convolutional Multi-layer Logistic Regression on MNIST.
 \begin{figure}[!htbp]
 \centering
-\label{convo}
-\caption{Convolutionary Multi-layer Logistic Regression with Noise on
-MNIST}
 \includegraphics[width=295pt]{f-figs/convo.png}
+\caption{Convolutionary Neural Network with Noise on MNIST}
+\label{convo}
 \end{figure}
+% explain the figures
 
+Figure~\ref{convo10} shows test error rate using noise-free and noise-added
+Convolutional Multi-layer Logistic Regression on CIFAR-10.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=295pt]{f-figs/convo10.png}
+\caption{Convolutionary Neural Network with Noise on CIFAR-10}
+\label{convo10}
+\end{figure}
