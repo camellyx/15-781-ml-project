@@ -1,0 +1,66 @@
+\section{Experiments}
+\label{sec:experiments}
+
+% Description of your testbed;
+% List of questions your experiments are designed to answer.
+% Details of the experiments; observations.
+
+\subsection{Adding Noise into Logistic Regression}
+In these experiments, we intorduce noise into gradient descent component
+of Logistic Regression.
+To be more specific, in a noise-free Logistic Regression model, weights
+are updated in the following way:
+\[
+W_{new} = W_{old} - \lr \nabla_{W_{old}} \cost(W)
+\]
+In a noise-added Logistic Regression model, weights are updated as:
+\[
+W_{new}=W_{old}-\lr \left(\mask_{Bin}\cdot \nabla_{W_{old}}\cost(W) \right)
+\]
+or
+\[
+W_{new} = W_{old} -\lr \left(\mask_{Gau}+\nabla_{W_{old}} \cost(W) \right)
+\]
+where learning rate is a scalar and mask is a vector that has the same dimension as $W_t$.
+
+We generate mask as a random vector from Binomial distribution $Bin(1,p)$
+and Gaussian distribution $\mathcal{N}(0, \sigma)$, respectively.
+
+We run experiments using different values of $p$ and $\sigma$.
+Figure~\ref{logistic} shows test error rate using noise-free and
+noise-added Logistic Regression.
+
+\begin{figure}[!htbp]
+\centering
+\label{logistic}
+\caption{Logistic Regression with Noise}
+\includegraphics[ ]
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Adding Noise into Multi-layer Logistic Regression}
+
+\subsection{Adding Noise into Convolutionary Neural Network}
+
+
