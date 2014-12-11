@@ -3,6 +3,13 @@
 % Description of your testbed;
 % List of questions your experiments are designed to answer.
 % Details of the experiments; observations.
+
+In this section, we first present the dataset we use in our experiments as well
+as the parameters for each model. Note that we fine tuned these parameters to
+achieve the best possible outcomes before we add our modification to the code.
+Next, we present the results and conclude findings we get from our experiments,
+including those negative results and the lessons learned in this project.
+
 \subsection{Dataset and Implementation Parameters}
 We experiment on three datasets---a hand-written digit dataset (MNIST),
 two tiny images datasets (CIFAR-10 and CIFAR-100).
@@ -84,6 +91,9 @@ $Rayleigh(1)$ is applied during gradient descent.
 The noise(Gamma) line shows test error rate when a mask generated from
 $Gamma(1,1)$ is applied during gradient descent.
 
+{\bf Finding 1: {\em A reasonable amount, and a reasonable amplitude of noise
+improves deep neural network model's accuracy, while a noise that is too
+significant does not.}} \\
 As showed in Figure~\ref{logistic}, {\em noise-added models achieve better
 accuracy compared to the noise-free model.}
 Noise(Binomial) model has the lowest test error rate (7.156\%) among the
@@ -115,6 +125,8 @@ from $Bin(1,0.99)$ is applied to both $W_{input}$ and $W_{output}$.
 The noise-variation line shows test error rate when a mask generated from
 Gaussian $\mathcal{N}(0,0.01)$ is added to $W_{input}$.
 
+{\bf Finding 2: {\em Deep learning models with noise perform no worse than
+the noise-free model.}} \\
 As showed in Figure~\ref{mlp}, {\em noise-added models perform no worse than the noise-free model.}
 Since the test error rate of the noise-free model is already
 quite low (2.63\%), it is difficult for noise-added models to significantly
@@ -138,12 +150,16 @@ horizontal axis is number of iterations. The experiments all run on
 CIFAR-10. The noise-free line, dropConnect line and dropOut line use
 the same models as experiments in Figure~\ref{mlp}, respectively.
 
+{\bf Finding 3: {\em Deep learning models with noise can take more iterations to
+converge as the test error fluctuates due to noise.}} \\
 As showed in Figure~\ref{mlp10}, noise-added models perform much better than
 noise-free model, though it takes longer to train noise-added models.
 An interesting observation is that {\em as training iterations increase,
 test error rate of noise-added models fluctuates.} This is another side
 effect of adding noise into the model.
 
+{\bf Finding 4: {\em Noise added to earlier stage of the deep learning models
+can be better integrated and generate less fluctuation.}} \\
 From the above experiments using MLP, we observe that models with noise added
 between input layer and hidden layer outperform other noise-added models.
 An intuitive explanation for this phenomenon is that {\em noise added to
@@ -165,6 +181,8 @@ The noise-free line shows test error rate when using a noise-free
 Convolutional Neural Network. The noise@downsampe line shows test error
 rate when noise is added during downsample process. The noise-before-hidden-layer line shows test error rate when noise is added right before hidden layer.
 
+{\bf Finding 5: {\em The convergence rate is faster for deep learning models
+with noise.}} \\
 As showed in Figure~\ref{convo}, the three models perform equally well.
 We observe that as the number of iterations increases, {\em noise-added
 models converge slightly faster}. This phenomenon is interesting because it is unexpected.
@@ -187,6 +205,8 @@ model has noise added between input layer and hidden layer.
 The convo-dropOut line shows test error rate when the MLP part of the model
 has noise added between hidden layer and output layer.
 
+{\bf Finding 6: {\em Noise improves both accuracy and convergence rate more with
+complex deep learning models.}} \\
 As showed in Figure~\ref{convo10}, the three models achieve the same lowest
 test error rate. However, through the training process, {\em the
 noise-added model (convo-dropConnect) converges faster than the noise-free
@@ -196,6 +216,9 @@ absorbed. We conjecture that {\em noise added to complicated deep
 learning models can improve not only accuracy but also convergence rate}.
 
 \subsection{Negative Results}
+
+{\bf Lesson Learned: {\em Complex deep learning models can integrate noise
+better than simple models.}}
 Figure~\ref{neg} shows some negative results from our experiments.
 We experiment noise-free and noise-added Logistic Regression on CIFAR-100.
 The noise-added model perform much worse than noise-free model. The
