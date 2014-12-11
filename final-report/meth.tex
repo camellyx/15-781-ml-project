@@ -6,7 +6,7 @@
 
 
 \subsection{Adding Noise into Logistic Regression}
-We first intorduce noise into gradient descent component
+We first introduce noise into gradient descent component
 of Logistic Regression.
 To be more specific, in a noise-free Logistic Regression model, weights
 are updated in the following way:
@@ -21,10 +21,10 @@ or
 \[
 W_{new} = W_{old} - \mask_{Gau} \cdot \nabla_{W_{old}} \cost(W)
 \]
-where learning rate is a scalar and mask is a vector that has the same dimension as $W_t$.
+where learning rate is a scalar and mask is a vector that has the same dimension as $W$.
 We generate $mask$ as a random vector from Binomial distribution
 $Bin(1,0.5)$, Gaussian distribution $\mathcal{N}(\lr, 2 \cdot \lr)$,
-Rayleigh Distribution or Gamma Distribution $Gamma(1)$.
+Rayleigh Distribution $Rayleigh(1)$ or Gamma Distribution $Gamma(1,1)$.
 
 \subsection{Adding Noise into Multi-layer Logistic Regression}
 Secondly, we introduce noise into weights between layers.
@@ -38,7 +38,7 @@ However, during a noise-added training process, weights between layers are
 are subject to some variation.
 To be more specific, let $W_{input}$ be the matrix of weights between
 input layer and hidden layer, $W_{output}$ be the matrix of weights
-between hidden layer and output layer. In a noise-added training procoss,
+between hidden layer and output layer. In a noise-added training process,
 we add combination of the following steps:
 \begin{align*}
 W_{input} & = W_{input} \cdot mask \\
@@ -49,12 +49,11 @@ where mask is a matrix of the same dimension as $W_{input}$ or $W_{output}$.
 We generate mask as a random matrix from Binomial Distribution
 $Bin(1,0.99)$ or Gaussian Distribution $\mathcal{N}(0, 0.01)$.
 
-\subsection{Adding Noise into Convolutionary Neural Network}
+\subsection{Adding Noise into Convolutional Neural Network}
 Last, we introduce noise into feature mapping component of
-the model. The difference between Convolutionary Neural Network and
-Multi-layer Logistic Regression is that it has a feature mapping process
-before MLP. Feature mapping is the process where a small window moves along
-the image to extract local features. In other words, the window, acting as
+the model. The difference between Convolutional Neural Network (LeNet) and
+Multi-layer Logistic Regression (MLP) is that LeNet has a feature mapping
+process before MLP. Feature mapping is a process where a small window moves along the image to extract local features. In other words, the window, acting as
 a function, will compute a linear combination of the underlying pixels.
 In a noise-added feature mapping process, the extracted feature is subject
 to some variation.
